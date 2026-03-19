@@ -42,9 +42,9 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="Joystay Vietnam"
-              width={260}
-              height={113}
-              className="h-[90px] sm:h-[110px] w-auto object-contain"
+              width={200}
+              height={87}
+              className="h-[55px] sm:h-[60px] w-auto object-contain"
               priority
             />
           </Link>
