@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-joy-cream text-joy-ink font-sans;
+  }
+
+  ::selection {
+    @apply bg-joy-green text-white;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { @apply bg-joy-cream; }
+  ::-webkit-scrollbar-thumb { @apply bg-joy-green rounded-full; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 bg-joy-green text-white
+           font-sans font-medium text-sm tracking-wide rounded-full
+           hover:bg-joy-charcoal transition-colors duration-300 ease-joy;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 border border-current
+           font-sans font-medium text-sm tracking-wide rounded-full
+           hover:bg-joy-ink hover:text-white hover:border-joy-ink
+           transition-all duration-300 ease-joy;
+  }
+
+  .btn-ghost-light {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 border border-white/40 text-white
+           font-sans font-medium text-sm tracking-wide rounded-full
+           hover:bg-white hover:text-joy-ink
+           transition-all duration-300 ease-joy;
+  }
+
+  /* ── Section tag: "──── LABEL" ── */
+  .section-tag {
+    @apply inline-flex items-center gap-2 text-xs font-sans font-semibold
+           tracking-[0.2em] uppercase text-joy-green;
+  }
+  .section-tag::before {
+    content: "";
+    @apply block w-8 h-px bg-joy-green;
+  }
+
+  .card-hover {
+    @apply transition-transform duration-500 ease-joy hover:-translate-y-1;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .animate-delay-100 { animation-delay: 100ms; }
+  .animate-delay-200 { animation-delay: 200ms; }
+  .animate-delay-300 { animation-delay: 300ms; }
+  .animate-delay-400 { animation-delay: 400ms; }
+}
