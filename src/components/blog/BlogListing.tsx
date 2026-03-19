@@ -3,16 +3,16 @@
 import { Clock } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
-import { BLOG_POSTS } from "@/lib/mock-data";
+import type { BlogPost } from "@/lib/mock-data";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 
-export default function BlogListing() {
+export default function BlogListing({ posts }: { posts: BlogPost[] }) {
   const { lang } = useLang();
 
   const categories = [
     tx(T.blog.filterAll, lang),
-    ...Array.from(new Set(BLOG_POSTS.map((p) => lang === "en" ? p.categoryEn : p.category))),
+    ...Array.from(new Set(posts.map((p) => lang === "en" ? p.categoryEn : p.category))),
   ];
 
   return (
@@ -47,7 +47,7 @@ export default function BlogListing() {
       {/* Grid */}
       <section className="bg-joy-cream py-14 px-5 sm:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {BLOG_POSTS.map((post) => (
+          {posts.map((post) => (
             <article key={post.id}
               className="group bg-white border border-joy-border rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-joy flex flex-col">
               <div className={`relative h-48 bg-gradient-to-br ${post.gradient} overflow-hidden`}>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, Users, Maximize2, Utensils, Wifi, AirVent, Tv } from "lucide-react";
-import { ROOMS } from "@/lib/mock-data";
+import type { Room } from "@/lib/mock-data";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 
@@ -13,7 +13,7 @@ const AMENITY_ICONS: Record<string, React.ReactNode> = {
   "Smart TV":     <Tv size={12} />,
 };
 
-export default function RoomsListing() {
+export default function RoomsListing({ rooms }: { rooms: Room[] }) {
   const { lang } = useLang();
 
   return (
@@ -51,7 +51,7 @@ export default function RoomsListing() {
       {/* Room Cards */}
       <section className="bg-joy-cream py-14 px-5 sm:px-8">
         <div className="max-w-7xl mx-auto space-y-8">
-          {ROOMS.map((room, idx) => (
+          {rooms.map((room, idx) => (
             <article key={room.id}
               className={`group relative bg-white border border-joy-border rounded-2xl overflow-hidden flex flex-col md:flex-row hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500 ease-joy ${!room.isAvailable ? "opacity-70" : ""}`}>
 

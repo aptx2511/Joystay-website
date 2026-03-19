@@ -6,17 +6,20 @@ import RoomShowcase      from "@/components/home/RoomShowcase";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import BlogPreview       from "@/components/home/BlogPreview";
 import CTABanner         from "@/components/home/CTABanner";
+import { getRooms, getPosts } from "@/lib/sanity-data";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [rooms, posts] = await Promise.all([getRooms(), getPosts()]);
+
   return (
     <>
       <Navbar />
       <main>
         <HeroSection />
         <AboutSection />
-        <RoomShowcase />
+        <RoomShowcase rooms={rooms} />
         <TestimonialsSection />
-        <BlogPreview />
+        <BlogPreview posts={posts} />
         <CTABanner />
       </main>
       <Footer />

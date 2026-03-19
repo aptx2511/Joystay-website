@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import RoomCard from "./RoomCard";
-import { ROOMS } from "@/lib/mock-data";
+import type { Room } from "@/lib/mock-data";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 
-export default function RoomShowcase() {
+export default function RoomShowcase({ rooms }: { rooms: Room[] }) {
   const { lang } = useLang();
 
   return (
@@ -32,7 +32,7 @@ export default function RoomShowcase() {
         <div className="relative">
           <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-joy-charcoal to-transparent pointer-events-none z-10" />
           <div className="flex gap-5 overflow-x-auto pb-6 -mx-5 px-5 sm:-mx-8 sm:px-8 scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {ROOMS.map((room, idx) => (
+            {rooms.map((room, idx) => (
               <div key={room.id} className="snap-start">
                 <RoomCard room={room} index={idx} />
               </div>

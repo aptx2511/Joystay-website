@@ -4,11 +4,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import BlogCard from "./BlogCard";
-import { BLOG_POSTS } from "@/lib/mock-data";
+import type { BlogPost } from "@/lib/mock-data";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 
-export default function BlogPreview() {
+export default function BlogPreview({ posts }: { posts: BlogPost[] }) {
   const { lang } = useLang();
 
   return (
@@ -28,7 +28,7 @@ export default function BlogPreview() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {BLOG_POSTS.map((post) => (
+          {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
         </div>
