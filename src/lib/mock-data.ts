@@ -10,11 +10,12 @@ export type Room = {
   securityDeposit?: number;
   stayType: "SHORT_STAY" | "LONG_STAY" | "BOTH";
   shortDescription: string;
+  shortDescriptionVi: string;
   gradient: string;
   accentColor: string;
   amenities: string[];
   isAvailable: boolean;
-  pmsRoomId: string;        // ID trong joystay-pms database
+  pmsRoomId: string;
 };
 
 export type Testimonial = {
@@ -31,8 +32,11 @@ export type BlogPost = {
   id: string;
   slug: string;
   title: string;
+  titleEn: string;
   excerpt: string;
+  excerptEn: string;
   category: string;
+  categoryEn: string;
   readTime: number;
   publishedAt: string;
   gradient: string;
@@ -51,8 +55,8 @@ export const ROOMS: Room[] = [
     pricePerMonth: 9500000,
     securityDeposit: 2000000,
     stayType: "BOTH",
-    shortDescription:
-      "Bold colours, iconic prints, and a fully-equipped kitchen — creativity lives here.",
+    shortDescription: "Bold colours, iconic prints, and a fully-equipped kitchen — creativity lives here.",
+    shortDescriptionVi: "Màu sắc rực rỡ, họa tiết nổi bật và bếp đầy đủ tiện nghi — sáng tạo sinh sống ở đây.",
     gradient: "from-rose-400 via-pink-400 to-yellow-300",
     accentColor: "bg-rose-500",
     amenities: ["Full Kitchen", "Smart TV", "AC", "WiFi", "Washer", "Bathtub"],
@@ -70,8 +74,8 @@ export const ROOMS: Room[] = [
     pricePerMonth: 9000000,
     securityDeposit: 2000000,
     stayType: "BOTH",
-    shortDescription:
-      "Timeless black-and-white aesthetic with a spacious kitchen for long-stay comfort.",
+    shortDescription: "Timeless black-and-white aesthetic with a spacious kitchen for long-stay comfort.",
+    shortDescriptionVi: "Thẩm mỹ đen trắng vượt thời gian với bếp rộng rãi, lý tưởng để ở dài hạn.",
     gradient: "from-zinc-900 via-zinc-700 to-slate-600",
     accentColor: "bg-zinc-800",
     amenities: ["Full Kitchen", "Smart TV", "AC", "WiFi", "Washer", "Rain Shower"],
@@ -87,8 +91,8 @@ export const ROOMS: Room[] = [
     maxGuests: 2,
     pricePerNight: 520000,
     stayType: "SHORT_STAY",
-    shortDescription:
-      "Rattan, raw linen, and vintage colonial accents — a quiet ode to old Saigon.",
+    shortDescription: "Rattan, raw linen, and vintage colonial accents — a quiet ode to old Saigon.",
+    shortDescriptionVi: "Mây tre, vải lanh thô và điểm nhấn thuộc địa vintage — ode nhẹ nhàng về Sài Gòn xưa.",
     gradient: "from-teal-800 via-emerald-700 to-amber-800",
     accentColor: "bg-teal-700",
     amenities: ["Smart TV", "AC", "WiFi", "Mini Fridge", "Rain Shower"],
@@ -104,8 +108,8 @@ export const ROOMS: Room[] = [
     maxGuests: 2,
     pricePerNight: 520000,
     stayType: "SHORT_STAY",
-    shortDescription:
-      "Warm walnut tones, clean lines, and retro geometry — design-forward and cosy.",
+    shortDescription: "Warm walnut tones, clean lines, and retro geometry — design-forward and cosy.",
+    shortDescriptionVi: "Tông gỗ walnut ấm áp, đường nét sạch sẽ và hình học retro — tinh tế và ấm cúng.",
     gradient: "from-orange-700 via-amber-600 to-yellow-500",
     accentColor: "bg-orange-600",
     amenities: ["Smart TV", "AC", "WiFi", "Mini Fridge", "Hot Tub"],
@@ -121,8 +125,8 @@ export const ROOMS: Room[] = [
     maxGuests: 2,
     pricePerNight: 480000,
     stayType: "SHORT_STAY",
-    shortDescription:
-      "Minimal, quiet, and perfectly composed. Sometimes less is the most.",
+    shortDescription: "Minimal, quiet, and perfectly composed. Sometimes less is the most.",
+    shortDescriptionVi: "Tối giản, yên tĩnh và hoàn hảo trong từng chi tiết. Đôi khi ít lại là nhiều nhất.",
     gradient: "from-slate-900 via-gray-800 to-zinc-700",
     accentColor: "bg-slate-700",
     amenities: ["Smart TV", "AC", "WiFi", "Mini Fridge", "Shower"],
@@ -168,9 +172,11 @@ export const BLOG_POSTS: BlogPost[] = [
     id: "1",
     slug: "top-cafes-near-joystay",
     title: "7 Quán Cà Phê Cực Chất Trong Vòng 10 Phút Từ Joystay",
-    excerpt:
-      "Từ cà phê cổ điển kiểu Sài Gòn đến không gian specialty roastery hiện đại — bạn không cần đi xa.",
-    category: "Saigon Guide",
+    titleEn: "7 Amazing Cafés Within 10 Minutes of Joystay",
+    excerpt: "Từ cà phê cổ điển kiểu Sài Gòn đến không gian specialty roastery hiện đại — bạn không cần đi xa.",
+    excerptEn: "From classic Saigon-style coffee to modern specialty roasteries — you don't need to go far.",
+    category: "Cẩm Nang Sài Gòn",
+    categoryEn: "Saigon Guide",
     readTime: 5,
     publishedAt: "2026-03-10",
     gradient: "from-amber-700 to-orange-500",
@@ -178,10 +184,12 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     id: "2",
     slug: "self-checkin-guide",
-    title: "How Our 24/7 Self Check-In Works — Step by Step",
-    excerpt:
-      "No waiting, no reception desk. Arrive at 2 AM or 2 PM — your key is always ready. Here's exactly how it works.",
-    category: "Guest Guide",
+    title: "Hướng Dẫn Tự Check-In 24/7 — Từng Bước Một",
+    titleEn: "How Our 24/7 Self Check-In Works — Step by Step",
+    excerpt: "Không chờ đợi, không lễ tân. Đến lúc 2 giờ sáng hay 2 giờ chiều — chìa khóa luôn sẵn sàng cho bạn.",
+    excerptEn: "No waiting, no reception desk. Arrive at 2 AM or 2 PM — your key is always ready. Here's exactly how it works.",
+    category: "Hướng Dẫn Khách",
+    categoryEn: "Guest Guide",
     readTime: 3,
     publishedAt: "2026-03-05",
     gradient: "from-teal-700 to-emerald-500",
@@ -189,10 +197,12 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     id: "3",
     slug: "district-1-hidden-gems",
-    title: "District 1 Hidden Gems Only Locals Know About",
-    excerpt:
-      "Skip the tourist traps. Here are the markets, restaurants, and rooftops that locals actually visit.",
-    category: "Saigon Guide",
+    title: "Bí Mật Quận 1 Mà Chỉ Người Địa Phương Mới Biết",
+    titleEn: "District 1 Hidden Gems Only Locals Know About",
+    excerpt: "Bỏ qua những điểm du lịch đông đúc. Đây là những khu chợ, nhà hàng và sân thượng mà người bản địa thực sự lui tới.",
+    excerptEn: "Skip the tourist traps. Here are the markets, restaurants, and rooftops that locals actually visit.",
+    category: "Cẩm Nang Sài Gòn",
+    categoryEn: "Saigon Guide",
     readTime: 7,
     publishedAt: "2026-02-28",
     gradient: "from-rose-700 to-pink-500",
@@ -205,21 +215,21 @@ export const USPS = [
     icon: "MapPin",
     title: "Prime District 1 Location",
     titleVi: "Trung Tâm Quận 1",
-    description:
-      "Nestled in a quiet alley, yet 5 minutes walk to Bui Vien, Ben Thanh Market, and Nguyen Hue Boulevard.",
+    description: "Nestled in a quiet alley, yet 5 minutes walk to Bui Vien, Ben Thanh Market, and Nguyen Hue Boulevard.",
+    descriptionVi: "Nằm trong con hẻm yên tĩnh, chỉ 5 phút đi bộ đến Bùi Viện, Chợ Bến Thành và Đại lộ Nguyễn Huệ.",
   },
   {
     icon: "KeyRound",
     title: "Self Check-In 24/7",
     titleVi: "Tự Check-In Mọi Lúc",
-    description:
-      "Smart lock system lets you arrive on your own schedule — no waiting, no front desk, total freedom.",
+    description: "Smart lock system lets you arrive on your own schedule — no waiting, no front desk, total freedom.",
+    descriptionVi: "Hệ thống khóa thông minh cho phép bạn đến bất cứ lúc nào — không chờ đợi, không lễ tân, hoàn toàn tự do.",
   },
   {
     icon: "Palette",
     title: "Curated Art Concepts",
     titleVi: "5 Concept Nghệ Thuật",
-    description:
-      "Every room is a distinct visual world — from Indochine colonial to Pop Art boldness. Stay differently each time.",
+    description: "Every room is a distinct visual world — from Indochine colonial to Pop Art boldness. Stay differently each time.",
+    descriptionVi: "Mỗi phòng là một thế giới hình ảnh độc đáo — từ phong cách Đông Dương đến Pop Art táo bạo. Mỗi lần nghỉ là một trải nghiệm khác.",
   },
 ];

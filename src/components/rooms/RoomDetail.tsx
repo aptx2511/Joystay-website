@@ -27,13 +27,13 @@ export default function RoomDetail({ room }: { room: Room }) {
         {/* Back button */}
         <Link
           href="/rooms"
-          className="absolute top-24 left-5 sm:left-8 flex items-center gap-2
+          className="absolute top-28 sm:top-32 left-5 sm:left-8 flex items-center gap-2
                      text-white/70 hover:text-white font-sans text-sm transition-colors z-10"
         >
           <ArrowLeft size={16} /> All Rooms
         </Link>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 pb-12 pt-32">
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 pb-12 pt-28 sm:pt-32">
           <span className={`inline-block ${room.accentColor} text-white font-sans
                             text-[10px] font-semibold tracking-[0.15em] uppercase
                             px-3 py-1 rounded-full mb-4`}>
