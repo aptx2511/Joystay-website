@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getActivePromoCodes } from "@/lib/sanity-data";
 
-// Fallback mock promos (used when Sanity is not configured)
-const MOCK_PROMOS = [
-  { code: "JOYSTAY10", discountType: "PERCENTAGE", discountValue: 10, minNights: 1, applicableRooms: [] },
-  { code: "JOYBLOG",   discountType: "PERCENTAGE", discountValue: 10, minNights: 1, applicableRooms: [] },
-];
-
 export async function POST(req: NextRequest) {
   try {
     const { code, roomSlug, nights } = await req.json();
@@ -18,17 +12,21 @@ export async function POST(req: NextRequest) {
     const upperCode = String(code).toUpperCase().trim();
     const nightsNum = Number(nights) || 0;
 
-    // Try Sanity first, fall back to mock
+    // Chỉ chấp nhận mã đang active & còn hạn trong Sanity (không có mã dự phòng trong code)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let promoCodes: any[] = await getActivePromoCodes();
-    if (!promoCodes?.length) promoCodes = MOCK_PROMOS;
+    const promoCodes: any[] = (await getActivePromoCodes()) ?? [];
 
     const promo = promoCodes.find(
-      (p) => p.code.toUpperCase() === upperCode
+      (p) => String(p.code ?? "").toUpperCase() === upperCode
     );
 
     if (!promo) {
       return NextResponse.json({ valid: false, message: "Invalid or expired code" });
+    }
+
+    // Check usage limit
+    if (promo.maxUses && (promo.usedCount ?? 0) >= promo.maxUses) {
+      return NextResponse.json({ valid: false, message: "This code has reached its usage limit" });
     }
 
     // Check room restriction

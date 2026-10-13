@@ -4,9 +4,11 @@ import { useState } from "react";
 import { Phone, MessageCircle, Mail, MapPin, Send, Facebook } from "lucide-react";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
+import { useSettings } from "@/lib/settings-context";
 
 export default function ContactSection() {
   const { lang } = useLang();
+  const site = useSettings();
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
 
@@ -42,7 +44,7 @@ export default function ContactSection() {
           <div className="space-y-8">
             <div className="rounded-2xl overflow-hidden border border-joy-border shadow-sm h-72">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.6!2d106.6903!3d10.7657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDQ1JzU2LjUiTiAxMDbCsDQxJzI1LjEiRQ!5e0!3m2!1sen!2s!4v1"
+                src={site.mapEmbedUrl}
                 width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade" title="Joystay Vietnam location" />
             </div>
@@ -50,13 +52,8 @@ export default function ContactSection() {
             <div className="flex gap-3 items-start bg-white border border-joy-border rounded-xl p-4">
               <MapPin size={18} className="text-joy-green shrink-0 mt-0.5" />
               <div>
-                <p className="font-sans font-semibold text-sm text-joy-ink">245 Nguyễn Trãi</p>
-                <p className="font-sans text-sm text-joy-muted">
-                  {lang === "en"
-                    ? "Nguyen Cu Trinh Ward, District 1\nHo Chi Minh City, Vietnam"
-                    : "Phường Nguyễn Cư Trinh, Quận 1\nTP. Hồ Chí Minh, Việt Nam"}
-                </p>
-                <a href="https://maps.google.com/?q=245+Nguyen+Trai,+District+1,+Ho+Chi+Minh+City"
+                <p className="font-sans font-semibold text-sm text-joy-ink whitespace-pre-line">{site.address}</p>
+                <a href={site.googleMapsUrl}
                   target="_blank" rel="noreferrer"
                   className="text-xs text-joy-green font-semibold hover:underline mt-1 inline-block">
                   {tx(T.contact.openMap, lang)}
@@ -70,10 +67,12 @@ export default function ContactSection() {
               </p>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { href: "tel:+84898888457", icon: <Phone size={16} className="text-joy-green" />, label: tx(T.contact.call, lang), sub: "(+84) 0898 888 457" },
-                  { href: "https://zalo.me/0898888457", icon: <MessageCircle size={16} className="text-joy-green" />, label: tx(T.contact.zalo, lang), sub: tx(T.contact.zaloSub, lang) },
-                  { href: "https://m.me/joystay", icon: <Facebook size={16} className="text-joy-green" />, label: tx(T.contact.messenger, lang), sub: tx(T.contact.messengerSub, lang) },
-                  { href: "mailto:hello@joystay.vn", icon: <Mail size={16} className="text-joy-green" />, label: tx(T.contact.email, lang), sub: "hello@joystay.vn" },
+                  { href: site.phoneHref, icon: <Phone size={16} className="text-joy-green" />, label: tx(T.contact.call, lang), sub: site.phone },
+                  { href: site.zaloLink, icon: <MessageCircle size={16} className="text-joy-green" />, label: tx(T.contact.zalo, lang), sub: tx(T.contact.zaloSub, lang) },
+                  ...(site.messengerLink
+                    ? [{ href: site.messengerLink, icon: <Facebook size={16} className="text-joy-green" />, label: tx(T.contact.messenger, lang), sub: tx(T.contact.messengerSub, lang) }]
+                    : []),
+                  { href: `mailto:${site.email}`, icon: <Mail size={16} className="text-joy-green" />, label: tx(T.contact.email, lang), sub: site.email },
                 ].map((item) => (
                   <a key={item.href} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer"
                     className="flex items-center gap-3 bg-white border border-joy-border rounded-xl p-4 hover:border-joy-green hover:shadow-sm transition-all duration-300 group">
@@ -150,7 +149,7 @@ export default function ContactSection() {
 
                 <p className="font-sans text-xs text-joy-muted text-center">
                   {tx(T.contact.orContact, lang)}{" "}
-                  <a href="https://zalo.me/0898888457" className="text-joy-green hover:underline">Zalo</a>{" "}
+                  <a href={site.zaloLink} target="_blank" rel="noreferrer" className="text-joy-green hover:underline">Zalo</a>{" "}
                   {tx(T.contact.forInstant, lang)}
                 </p>
               </form>

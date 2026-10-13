@@ -178,7 +178,7 @@ export const REVIEWS_QUERY = `
 `;
 
 export const ACTIVE_PROMO_CODES_QUERY = `
-  *[_type == "promoCode" && isActive == true && validUntil > now()] {
+  *[_type == "promoCode" && isActive == true && validUntil > now() && (!defined(validFrom) || validFrom <= now())] {
     code,
     discountType,
     discountValue,

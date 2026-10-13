@@ -3,6 +3,8 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import { LangProvider } from "@/lib/lang-context";
 import JoyBotWidget from "@/components/chat/JoyBotWidget";
+import { SettingsProvider } from "@/lib/settings-context";
+import { getSiteSettings } from "@/lib/sanity-data";
 import "./globals.css";
 
 const GTM_ID      = process.env.NEXT_PUBLIC_GTM_ID      ?? "";
@@ -41,11 +43,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`}>
       <head>
@@ -71,7 +75,9 @@ export default function RootLayout({
             />
           </noscript>
         )}
-        <LangProvider>{children}</LangProvider>
+        <SettingsProvider value={settings}>
+          <LangProvider>{children}</LangProvider>
+        </SettingsProvider>
         <JoyBotWidget />
       </body>
 

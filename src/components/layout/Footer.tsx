@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Instagram, Facebook, Phone, Mail, MapPin } from "lucide-react";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
+import { useSettings } from "@/lib/settings-context";
 
 const ROOM_LINKS = [
   { label: "Pop Art Studio",    href: "/rooms/pop-art-studio"  },
@@ -16,6 +17,7 @@ const ROOM_LINKS = [
 
 export default function Footer() {
   const { lang } = useLang();
+  const site = useSettings();
 
   return (
     <footer className="bg-joy-charcoal text-white/70 font-sans">
@@ -31,14 +33,18 @@ export default function Footer() {
             {tx(T.footer.about, lang)}
           </p>
           <div className="flex gap-3 mt-6">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer"
-              className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-joy-green hover:text-joy-green transition-colors duration-300">
-              <Instagram size={15} />
-            </a>
-            <a href="https://facebook.com" target="_blank" rel="noreferrer"
-              className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-joy-green hover:text-joy-green transition-colors duration-300">
-              <Facebook size={15} />
-            </a>
+            {site.instagramUrl && (
+              <a href={site.instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-joy-green hover:text-joy-green transition-colors duration-300">
+                <Instagram size={15} />
+              </a>
+            )}
+            {site.facebookUrl && (
+              <a href={site.facebookUrl} target="_blank" rel="noreferrer" aria-label="Facebook"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-joy-green hover:text-joy-green transition-colors duration-300">
+                <Facebook size={15} />
+              </a>
+            )}
           </div>
         </div>
 
@@ -85,18 +91,18 @@ export default function Footer() {
           <ul className="space-y-4 text-sm">
             <li className="flex gap-3">
               <MapPin size={15} className="text-joy-green shrink-0 mt-0.5" />
-              <span className="text-white/60 leading-snug">
-                245 Nguyễn Trãi, Phường Nguyễn Cư Trinh<br />
-                {lang === "en" ? "District 1, Ho Chi Minh City" : "Quận 1, TP. Hồ Chí Minh"}
-              </span>
+              <a href={site.googleMapsUrl} target="_blank" rel="noreferrer"
+                className="text-white/60 leading-snug whitespace-pre-line hover:text-joy-green transition-colors">
+                {site.address}
+              </a>
             </li>
             <li className="flex gap-3 items-center">
               <Phone size={15} className="text-joy-green shrink-0" />
-              <a href="tel:+84898888457" className="hover:text-joy-green transition-colors">(+84) 0898 888 457</a>
+              <a href={site.phoneHref} className="hover:text-joy-green transition-colors">{site.phone}</a>
             </li>
             <li className="flex gap-3 items-center">
               <Mail size={15} className="text-joy-green shrink-0" />
-              <a href="mailto:hello@joystay.vn" className="hover:text-joy-green transition-colors">hello@joystay.vn</a>
+              <a href={`mailto:${site.email}`} className="hover:text-joy-green transition-colors">{site.email}</a>
             </li>
           </ul>
         </div>

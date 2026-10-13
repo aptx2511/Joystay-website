@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
+import { useSettings } from "@/lib/settings-context";
 
 const NAV_LINKS: { en: string; vi: string; href: string }[] = [
   { en: "Home",    vi: "Trang Chủ", href: "/"        },
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { lang, setLang } = useLang();
+  const site = useSettings();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -74,13 +76,13 @@ export default function Navbar() {
           {/* ── Phải: SĐT + Lang toggle + Button ─────────────────── */}
           <div className="ml-auto hidden md:flex items-center gap-4 shrink-0">
             <a
-              href="tel:+84898888457"
+              href={site.phoneHref}
               className="flex items-center gap-1.5 font-sans text-[13px]
                          font-semibold text-joy-ink hover:text-joy-green
                          transition-colors duration-200"
             >
               <Phone size={13} strokeWidth={2} className="text-joy-green" />
-              (+84) 0898 888 457
+              {site.phone}
             </a>
 
             {/* Language toggle */}
@@ -159,10 +161,10 @@ export default function Navbar() {
 
         <div className="mt-10 space-y-3">
           <a
-            href="tel:+84898888457"
+            href={site.phoneHref}
             className="flex items-center gap-2 text-white/60 font-sans text-sm"
           >
-            <Phone size={14} /> (+84) 0898 888 457
+            <Phone size={14} /> {site.phone}
           </a>
           <Link
             href="/rooms"
@@ -174,7 +176,7 @@ export default function Navbar() {
         </div>
 
         <p className="mt-8 font-sans text-xs text-white/30 tracking-widest uppercase">
-          245 Nguyễn Trãi, District 1, HCMC
+          {site.address}
         </p>
       </div>
     </>

@@ -19,7 +19,6 @@ export async function getRooms(): Promise<Room[]> {
   if (!USE_SANITY) return ROOMS;
   try {
     const data = await client.fetch(ALL_ROOMS_QUERY, {}, { cache: "no-store" });
-    console.log("[getRooms] first room featuredImage:", data?.[0]?.featuredImage ?? "NULL");
     return data?.length ? data : ROOMS;
   } catch (err) {
     console.error("[getRooms] Sanity fetch failed, using mock data:", err);
@@ -70,11 +69,12 @@ export async function getPostSlugs(): Promise<string[]> {
 }
 
 // ── Site Settings ────────────────────────────────────────────────────────────
+// Webhook Publish sẽ cập nhật ngay; revalidate 60s là lưới an toàn nếu webhook lỗi.
 
 export async function getSiteSettings() {
   if (!USE_SANITY) return null;
   try {
-    return await client.fetch(SITE_SETTINGS_QUERY, {}, { next: { tags: ["siteSettings"], revalidate: 3600 } });
+    return await client.fetch(SITE_SETTINGS_QUERY, {}, { next: { tags: ["siteSettings"], revalidate: 60 } });
   } catch {
     return null;
   }
@@ -96,7 +96,7 @@ export async function getReviews() {
 export async function getActivePromoCodes() {
   if (!USE_SANITY) return [];
   try {
-    return await client.fetch(ACTIVE_PROMO_CODES_QUERY, {}, { next: { tags: ["promoCode"] } });
+    return await client.fetch(ACTIVE_PROMO_CODES_QUERY, {}, { next: { tags: ["promoCode"], revalidate: 60 } });
   } catch {
     return [];
   }
