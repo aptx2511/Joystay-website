@@ -57,6 +57,17 @@ export default function RoomsListing({ rooms }: { rooms: Room[] }) {
 
               {/* Visual */}
               <div className={`relative md:w-80 lg:w-96 h-56 md:h-auto shrink-0 bg-gradient-to-br ${room.gradient} overflow-hidden`}>
+                {room.featuredImage && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={`${room.featuredImage}?w=800&auto=format&q=80`}
+                    alt={room.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={room.featuredImageHotspot ? {
+                      objectPosition: `${room.featuredImageHotspot.x * 100}% ${room.featuredImageHotspot.y * 100}%`
+                    } : undefined}
+                  />
+                )}
                 <div className="absolute top-4 left-4">
                   <span className={`${room.accentColor} text-white font-sans text-[10px] font-semibold tracking-[0.15em] uppercase px-3 py-1 rounded-full`}>
                     {room.concept}
@@ -94,6 +105,11 @@ export default function RoomsListing({ rooms }: { rooms: Room[] }) {
                         {(room.pricePerNight / 1000).toFixed(0)}k
                         <span className="font-sans text-xs text-joy-muted"> {tx(T.rooms.perNight, lang)}</span>
                       </p>
+                      {room.weekendPrice && (
+                        <p className="font-sans text-[11px] text-joy-muted mt-0.5">
+                          T6–T7: <span className="text-joy-ink">{(room.weekendPrice / 1000).toFixed(0)}k</span>
+                        </p>
+                      )}
                       {room.pricePerMonth && (
                         <p className="font-sans text-xs text-joy-green mt-0.5">
                           {(room.pricePerMonth / 1000000).toFixed(1)}M {tx(T.rooms.perMonth, lang)}

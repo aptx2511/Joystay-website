@@ -176,6 +176,63 @@ export const T = {
     },
   },
 
+  checkout: {
+    // Page
+    title:        { en: "Complete Your Booking",      vi: "Hoàn Tất Đặt Phòng"          },
+    stepBooking:  { en: "Booking Details",            vi: "Chi Tiết Đặt Phòng"           },
+    summaryTitle: { en: "Price Breakdown",            vi: "Chi Tiết Giá"                 },
+    // Nights
+    night:        { en: "night",                      vi: "đêm"                          },
+    nights:       { en: "nights",                     vi: "đêm"                          },
+    // Price
+    total:        { en: "Total",                      vi: "Tổng Cộng"                    },
+    // Promo
+    promoLabel:       { en: "Promo Code",             vi: "Mã Giảm Giá"                  },
+    promoPlaceholder: { en: "Enter code",             vi: "Nhập mã"                      },
+    promoApply:       { en: "Apply",                  vi: "Áp Dụng"                      },
+    promoSuccess:     { en: "Code applied!",          vi: "Đã áp dụng mã giảm giá!"     },
+    promoInvalid:     { en: "Invalid or expired code",vi: "Mã không hợp lệ hoặc hết hạn"},
+    // Guest form
+    guestTitle:   { en: "Your Information",           vi: "Thông Tin Của Bạn"            },
+    guestName:    { en: "Full Name *",                vi: "Họ và Tên *"                  },
+    guestNamePh:  { en: "Your full name",             vi: "Nguyễn Văn A"                 },
+    guestPhone:   { en: "Phone Number *",             vi: "Số Điện Thoại *"              },
+    guestPhonePh: { en: "0909 000 000",               vi: "0909 000 000"                 },
+    guestEmail:   { en: "Email (optional)",           vi: "Email (không bắt buộc)"       },
+    guestEmailPh: { en: "your@email.com",             vi: "email@cuaban.com"             },
+    guestNotes:   { en: "Special Requests",           vi: "Yêu Cầu Đặc Biệt"            },
+    guestNotesPh: {
+      en: "Early check-in, late check-out, dietary needs...",
+      vi: "Check-in sớm, check-out muộn, yêu cầu đặc biệt...",
+    },
+    confirmBtn:   { en: "Confirm Booking",            vi: "Xác Nhận Đặt Phòng"          },
+    selectDates:  {
+      en: "Please select check-in and check-out dates above",
+      vi: "Vui lòng chọn ngày đến và ngày đi ở trên",
+    },
+    // Payment step
+    paymentTitle:       { en: "Complete Your Payment",               vi: "Hoàn Tất Thanh Toán"                  },
+    paymentRef:         { en: "Booking reference",                   vi: "Mã đặt phòng"                         },
+    paymentInstr:       {
+      en: "Transfer the exact amount below to confirm your reservation:",
+      vi: "Chuyển khoản đúng số tiền dưới đây để xác nhận đặt phòng:",
+    },
+    paymentBank:        { en: "Bank",                                vi: "Ngân Hàng"                            },
+    paymentAccount:     { en: "Account Number",                      vi: "Số Tài Khoản"                         },
+    paymentName:        { en: "Account Name",                        vi: "Tên Tài Khoản"                        },
+    paymentAmount:      { en: "Amount to transfer",                  vi: "Số Tiền Chuyển Khoản"                 },
+    paymentNote:        { en: "Transfer note",                       vi: "Nội Dung Chuyển Khoản"                },
+    paymentSendZalo:    { en: "Send Payment Screenshot via Zalo",    vi: "Gửi Ảnh Chuyển Khoản qua Zalo"       },
+    paymentConfirmTime: {
+      en: "We'll confirm your booking within 30 minutes after receiving payment.",
+      vi: "Chúng tôi sẽ xác nhận đặt phòng trong vòng 30 phút sau khi nhận được thanh toán.",
+    },
+    paymentEditBooking: { en: "← Edit booking details",             vi: "← Sửa thông tin đặt phòng"           },
+    // Misc
+    backToRoom:   { en: "Back to",                    vi: "Quay lại"                     },
+    orContact:    { en: "Or contact us directly:",    vi: "Hoặc liên hệ trực tiếp:"     },
+  },
+
   footer: {
     tagline:    { en: "The Art of Stay", vi: "Nghệ Thuật Của Sự Lưu Trú" },
     about:      {

@@ -1,13 +1,37 @@
 "use client";
 
-import SectionHeading from "@/components/ui/SectionHeading";
 import { Star } from "lucide-react";
-import { TESTIMONIALS } from "@/lib/mock-data";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 
-export default function TestimonialsSection() {
+export interface Review {
+  _id: string;
+  guestName: string;
+  flag?: string;
+  country?: string;
+  rating: number;
+  text: string;
+  textVi?: string;
+  stayType?: string;
+  roomName?: string;
+  source?: string;
+  stayDate?: string;
+}
+
+const SOURCE_BADGE: Record<string, { label: string; bg: string; dot: string }> = {
+  Airbnb:  { label: "Airbnb",  bg: "bg-rose-50 border-rose-100 text-rose-500",   dot: "bg-rose-500"   },
+  Google:  { label: "Google",  bg: "bg-blue-50 border-blue-100 text-blue-500",   dot: "bg-blue-500"   },
+  Direct:  { label: "Direct",  bg: "bg-joy-warm border-joy-border text-joy-muted", dot: "bg-joy-green" },
+};
+
+export default function TestimonialsSection({ reviews }: { reviews: Review[] }) {
   const { lang } = useLang();
+
+  const totalReviews = reviews.length;
+  const avgRating = totalReviews
+    ? (reviews.reduce((s, r) => s + r.rating, 0) / totalReviews).toFixed(1)
+    : "5.0";
 
   return (
     <section className="bg-joy-cream py-24 sm:py-32">
@@ -25,34 +49,74 @@ export default function TestimonialsSection() {
               <Star key={i} size={16} className="text-joy-green fill-joy-green" />
             ))}
             <span className="ml-2 font-sans text-sm text-joy-muted">
-              {tx(T.testimonials.reviews, lang)}
+              {avgRating} · {totalReviews} {tx(T.testimonials.reviews, lang)}
             </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {TESTIMONIALS.map((t) => (
-            <article key={t.id}
-              className="bg-white border border-joy-border rounded-2xl p-7 flex flex-col hover:shadow-md hover:-translate-y-0.5 transition-all duration-400 ease-joy">
-              <div className="flex gap-0.5 mb-5">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} size={13} className="text-joy-green fill-joy-green" />
-                ))}
-              </div>
-              <span className="font-serif text-5xl text-joy-green/20 leading-none -mt-2 mb-2 select-none">&ldquo;</span>
-              <p className="font-sans text-sm text-joy-ink/80 leading-relaxed flex-1">{t.text}</p>
-              <div className="mt-6 pt-5 border-t border-joy-border flex items-center justify-between">
-                <div>
-                  <p className="font-sans font-semibold text-sm text-joy-ink">{t.flag} {t.name}</p>
-                  <p className="font-sans text-xs text-joy-muted mt-0.5">{t.country}</p>
-                </div>
-                <span className="font-sans text-[10px] text-joy-muted tracking-wide bg-joy-warm px-3 py-1 rounded-full">
-                  {t.stayType}
-                </span>
-              </div>
-            </article>
-          ))}
-        </div>
+        {reviews.length === 0 ? (
+          <p className="text-center text-joy-muted font-sans text-sm">
+            {lang === "vi" ? "Chưa có đánh giá nào." : "No reviews yet."}
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {reviews.map((r) => {
+              const badge = SOURCE_BADGE[r.source ?? "Airbnb"] ?? SOURCE_BADGE.Airbnb;
+              const displayText = lang === "vi" && r.textVi ? r.textVi : r.text;
+              return (
+                <article key={r._id}
+                  className="bg-white border border-joy-border rounded-2xl p-7 flex flex-col hover:shadow-md hover:-translate-y-0.5 transition-all duration-400 ease-joy">
+
+                  {/* Stars */}
+                  <div className="flex gap-0.5 mb-4">
+                    {Array.from({ length: r.rating }).map((_, i) => (
+                      <Star key={i} size={13} className="text-joy-green fill-joy-green" />
+                    ))}
+                  </div>
+
+                  {/* Quote mark */}
+                  <span className="font-serif text-5xl text-joy-green/20 leading-none -mt-2 mb-2 select-none">&ldquo;</span>
+
+                  {/* Review text */}
+                  <p className="font-sans text-sm text-joy-ink/80 leading-relaxed flex-1">
+                    {displayText}
+                  </p>
+
+                  {/* Footer */}
+                  <div className="mt-6 pt-5 border-t border-joy-border">
+                    <div className="flex items-center justify-between mb-2">
+                      <div>
+                        <p className="font-sans font-semibold text-sm text-joy-ink">
+                          {r.flag} {r.guestName}
+                        </p>
+                        <p className="font-sans text-xs text-joy-muted mt-0.5">
+                          {[r.country, r.stayDate].filter(Boolean).join(" · ")}
+                        </p>
+                      </div>
+                      {r.stayType && (
+                        <span className="font-sans text-[10px] text-joy-muted tracking-wide bg-joy-warm px-3 py-1 rounded-full border border-joy-border">
+                          {r.stayType}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between mt-3">
+                      {r.roomName && (
+                        <span className="font-sans text-[10px] text-joy-muted italic">
+                          {r.roomName}
+                        </span>
+                      )}
+                      <span className={`ml-auto inline-flex items-center gap-1.5 font-sans text-[10px] font-medium px-3 py-1 rounded-full border ${badge.bg}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`} />
+                        {badge.label}
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
 
         <div className="mt-10 text-center">
           <span className="inline-flex items-center gap-2 font-sans text-xs text-joy-muted bg-white border border-joy-border px-5 py-2.5 rounded-full">

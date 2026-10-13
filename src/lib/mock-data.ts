@@ -1,13 +1,32 @@
+export type GalleryImage = {
+  url: string;
+  alt?: string;
+  hotspot?: { x: number; y: number };
+};
+
+export type RoomGallery = {
+  bedroom?:  GalleryImage[];
+  living?:   GalleryImage[];
+  kitchen?:  GalleryImage[];
+  bathroom?: GalleryImage[];
+  other?:    GalleryImage[];
+};
+
 export type Room = {
   id: string;
   slug: string;
   name: string;
   concept: string;
+  tagline?: string;
   size: number;
   maxGuests: number;
+  bedType?: string;
   pricePerNight: number;
+  weekendPrice?: number;
   pricePerMonth?: number;
   securityDeposit?: number;
+  securityDepositNote?: string;
+  cleaningFee?: number;
   stayType: "SHORT_STAY" | "LONG_STAY" | "BOTH";
   shortDescription: string;
   shortDescriptionVi: string;
@@ -16,6 +35,9 @@ export type Room = {
   amenities: string[];
   isAvailable: boolean;
   pmsRoomId: string;
+  featuredImage?: string;
+  featuredImageHotspot?: { x: number; y: number };
+  gallery?: RoomGallery;
 };
 
 export type Testimonial = {
@@ -66,7 +88,7 @@ export const ROOMS: Room[] = [
   {
     id: "bw-studio-large",
     slug: "bw-studio-large",
-    name: "B&W Studio Large",
+    name: "Monochrome Studio",
     concept: "Monochrome",
     size: 25,
     maxGuests: 2,
@@ -85,7 +107,7 @@ export const ROOMS: Room[] = [
   {
     id: "indochine-room",
     slug: "indochine-room",
-    name: "Indochine Room",
+    name: "Indochine 1",
     concept: "Indochine",
     size: 15,
     maxGuests: 2,
@@ -102,7 +124,7 @@ export const ROOMS: Room[] = [
   {
     id: "midcentury-room",
     slug: "midcentury-room",
-    name: "Midcentury Room",
+    name: "Tropical Oasis Room",
     concept: "Mid-Century",
     size: 15,
     maxGuests: 2,
@@ -119,7 +141,7 @@ export const ROOMS: Room[] = [
   {
     id: "bw-room-small",
     slug: "bw-room-small",
-    name: "B&W Room Small",
+    name: "Indochine 2",
     concept: "Monochrome",
     size: 15,
     maxGuests: 2,
@@ -152,8 +174,8 @@ export const TESTIMONIALS: Testimonial[] = [
     country: "Japan",
     flag: "🇯🇵",
     rating: 5,
-    text: "Perfectly located — Bui Vien is 5 minutes away but the alley is completely silent. The Indochine Room is stunning. Will definitely return.",
-    stayType: "5 nights · Indochine Room",
+    text: "Perfectly located — Bui Vien is 5 minutes away but the alley is completely silent. The Indochine 1 is stunning. Will definitely return.",
+    stayType: "5 nights · Indochine 1",
   },
   {
     id: 3,

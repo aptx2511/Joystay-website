@@ -18,8 +18,14 @@ export const ALL_ROOMS_QUERY = `
     amenities,
     isAvailable,
     pmsRoomId,
-    "featuredImage": featuredImage.asset->url,
-    featuredImageHotspot: featuredImage.hotspot
+    "featuredImage": coalesce(
+      featuredImage.asset->url,
+      galleryBedroom[0].asset->url,
+      galleryLiving[0].asset->url,
+      galleryBathroom[0].asset->url,
+      galleryOther[0].asset->url
+    ),
+    "featuredImageHotspot": featuredImage.hotspot
   }
 `;
 
@@ -50,9 +56,21 @@ export const ROOM_BY_SLUG_QUERY = `
     amenities,
     isAvailable,
     pmsRoomId,
-    "featuredImage": featuredImage.asset->url,
-    featuredImageHotspot: featuredImage.hotspot,
-    "gallery": gallery[].asset->url,
+    "featuredImage": coalesce(
+      featuredImage.asset->url,
+      galleryBedroom[0].asset->url,
+      galleryLiving[0].asset->url,
+      galleryBathroom[0].asset->url,
+      galleryOther[0].asset->url
+    ),
+    "featuredImageHotspot": featuredImage.hotspot,
+    "gallery": {
+      "bedroom":  galleryBedroom[]{ "url": asset->url, "alt": alt, "hotspot": hotspot },
+      "living":   galleryLiving[]{ "url": asset->url, "alt": alt, "hotspot": hotspot },
+      "kitchen":  galleryKitchen[]{ "url": asset->url, "alt": alt, "hotspot": hotspot },
+      "bathroom": galleryBathroom[]{ "url": asset->url, "alt": alt, "hotspot": hotspot },
+      "other":    galleryOther[]{ "url": asset->url, "alt": alt, "hotspot": hotspot }
+    },
     seoTitle,
     seoDescription
   }
@@ -116,7 +134,47 @@ export const POST_BY_SLUG_QUERY = `
 `;
 
 export const SITE_SETTINGS_QUERY = `
-  *[_type == "siteSettings"][0]
+  *[_type == "siteSettings"][0] {
+    phone,
+    email,
+    address,
+    zaloLink,
+    messengerLink,
+    googleMapsUrl,
+    facebookUrl,
+    instagramUrl,
+    airbnbUrl,
+    bankName,
+    bankAccountName,
+    bankAccountNumber,
+    "bankQRImageUrl": bankQRImage.asset->url,
+    defaultSeoTitle,
+    defaultSeoDescription,
+    "heroBackground": {
+      "type": heroBackground.type,
+      "imageUrl": heroBackground.image.asset->url,
+      "imageHotspot": heroBackground.image.hotspot,
+      "videoUrl": heroBackground.video.asset->url,
+      "overlayOpacity": coalesce(heroBackground.overlayOpacity, 60)
+    }
+  }
+`;
+
+export const REVIEWS_QUERY = `
+  *[_type == "review" && isPublished == true && isFeatured == true]
+  | order(sortOrder asc, _createdAt desc) {
+    _id,
+    guestName,
+    flag,
+    country,
+    rating,
+    text,
+    textVi,
+    stayType,
+    roomName,
+    source,
+    stayDate,
+  }
 `;
 
 export const ACTIVE_PROMO_CODES_QUERY = `

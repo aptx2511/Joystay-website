@@ -8,10 +8,10 @@ import { T } from "@/lib/translations";
 
 const ROOM_LINKS = [
   { label: "Pop Art Studio",    href: "/rooms/pop-art-studio"  },
-  { label: "B&W Studio Large",  href: "/rooms/bw-studio-large" },
-  { label: "Indochine Room",    href: "/rooms/indochine-room"  },
-  { label: "Midcentury Room",   href: "/rooms/midcentury-room" },
-  { label: "B&W Room Small",    href: "/rooms/bw-room-small"   },
+  { label: "Monochrome Studio",  href: "/rooms/bw-studio-large" },
+  { label: "Indochine 1",       href: "/rooms/indochine-room"  },
+  { label: "Tropical Oasis Room", href: "/rooms/midcentury-room" },
+  { label: "Indochine 2",       href: "/rooms/bw-room-small"   },
 ];
 
 export default function Footer() {

@@ -2,12 +2,10 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import RoomDetail from "@/components/rooms/RoomDetail";
-import { getRoomBySlug, getRoomSlugs } from "@/lib/sanity-data";
+import { getRoomBySlug } from "@/lib/sanity-data";
 
-export async function generateStaticParams() {
-  const slugs = await getRoomSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+// SSR: luôn fetch fresh từ Sanity, không dùng cache tĩnh
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

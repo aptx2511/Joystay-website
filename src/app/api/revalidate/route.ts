@@ -1,6 +1,8 @@
 import { revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 
+const CONTENT_TAGS = ["room", "post", "promoCode", "siteSettings", "review"];
+
 export async function POST(req: NextRequest) {
   const secret = req.nextUrl.searchParams.get("secret");
 
@@ -9,15 +11,20 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const body = await req.json();
-    const type = body._type as string;
+    // Sanity transaction webhook sends {ids: {created,updated,deleted}}
+    // Sanity document webhook sends {_type: "room", ...}
+    // Both cases: revalidate all content tags
+    const body = await req.json().catch(() => ({}));
+    const type = body._type as string | undefined;
 
-    if (type) {
+    if (type && CONTENT_TAGS.includes(type)) {
       revalidateTag(type);
+    } else {
+      CONTENT_TAGS.forEach(revalidateTag);
     }
 
-    return NextResponse.json({ revalidated: true, type, ts: Date.now() });
+    return NextResponse.json({ revalidated: true, tags: type ? [type] : CONTENT_TAGS, ts: Date.now() });
   } catch {
-    return NextResponse.json({ message: "Invalid body" }, { status: 400 });
+    return NextResponse.json({ message: "Error" }, { status: 500 });
   }
 }

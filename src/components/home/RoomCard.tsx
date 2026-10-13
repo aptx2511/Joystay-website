@@ -25,7 +25,18 @@ export default function RoomCard({ room, index }: RoomCardProps) {
       >
         {/* Image */}
         <div className="relative h-56 sm:h-64 overflow-hidden">
-          <div className={`absolute inset-0 bg-gradient-to-br ${room.gradient} transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]`} />
+          <div className={`absolute inset-0 bg-gradient-to-br ${room.gradient}`} />
+          {room.featuredImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`${room.featuredImage}?w=640&auto=format&q=80`}
+              alt={room.name}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
+              style={room.featuredImageHotspot ? {
+                objectPosition: `${room.featuredImageHotspot.x * 100}% ${room.featuredImageHotspot.y * 100}%`
+              } : undefined}
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent z-[1]" />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/5 transition-colors duration-400 z-[2]" />
 
@@ -44,9 +55,9 @@ export default function RoomCard({ room, index }: RoomCardProps) {
           )}
 
           <div className="absolute inset-0 flex items-center justify-center z-[3] opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
-            <span className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-sans text-sm font-medium tracking-wide px-6 py-2.5 rounded-full flex items-center gap-2">
+            <Link href={`/rooms/${room.slug}`} className="bg-white/10 backdrop-blur-md border border-white/20 text-white font-sans text-sm font-medium tracking-wide px-6 py-2.5 rounded-full flex items-center gap-2">
               {tx(T.roomCard.explore, lang)} <ArrowRight size={14} />
-            </span>
+            </Link>
           </div>
 
           <div className="absolute bottom-4 right-4 z-[3]">

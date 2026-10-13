@@ -8,7 +8,7 @@ export const client = createClient({
   projectId: projectId || "placeholder",
   dataset,
   apiVersion: "2024-01-01",
-  useCdn: true,
+  useCdn: false, // false = luôn fetch trực tiếp từ Sanity API, tránh CDN stale cache
 });
 
-export const isSanityConfigured = !!(projectId && projectId !== "placeholder");
+export const isSanityConfigured = !!(projectId?.trim() && projectId.trim() !== "placeholder");

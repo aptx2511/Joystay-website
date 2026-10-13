@@ -7,7 +7,19 @@ import { ChevronDown } from "lucide-react";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 
-export default function HeroSection() {
+interface HeroBg {
+  type?: "image" | "video";
+  imageUrl?: string;
+  imageHotspot?: { x: number; y: number };
+  videoUrl?: string;
+  overlayOpacity?: number;
+}
+
+interface Props {
+  heroBackground?: HeroBg | null;
+}
+
+export default function HeroSection({ heroBackground }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const { lang } = useLang();
 
@@ -17,15 +29,62 @@ export default function HeroSection() {
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 50]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+  const hasMedia = heroBackground?.type === "video"
+    ? !!heroBackground.videoUrl
+    : !!heroBackground?.imageUrl;
+
+  const overlayOpacity = (heroBackground?.overlayOpacity ?? 60) / 100;
+
   return (
     <section ref={sectionRef} className="relative min-h-screen flex flex-col overflow-hidden">
-      {/* Background */}
+      {/* Background base */}
       <div className="absolute inset-0 bg-[#0d0f0d]">
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-[#111310] to-zinc-950" />
-        <motion.div style={{ y: blob1Y }} className="absolute -top-48 -right-48 w-[700px] h-[700px] rounded-full bg-joy-green/[0.07] blur-[160px] pointer-events-none" />
-        <motion.div style={{ y: blob2Y }} className="absolute -bottom-64 -left-32 w-[600px] h-[600px] rounded-full bg-teal-800/[0.12] blur-[130px] pointer-events-none" />
-        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)`, backgroundSize: "44px 44px" }} />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,transparent_60%,rgba(0,0,0,0.6)_100%)]" />
+
+        {/* ── Sanity media (video or image) ── */}
+        {hasMedia && heroBackground?.type === "video" && heroBackground.videoUrl && (
+          <video
+            key={heroBackground.videoUrl}
+            autoPlay muted loop playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={heroBackground.videoUrl} type="video/mp4" />
+            <source src={heroBackground.videoUrl} type="video/webm" />
+          </video>
+        )}
+
+        {hasMedia && heroBackground?.type === "image" && heroBackground.imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={`${heroBackground.imageUrl}?w=1920&auto=format&q=85`}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={heroBackground.imageHotspot ? {
+              objectPosition: `${heroBackground.imageHotspot.x * 100}% ${heroBackground.imageHotspot.y * 100}%`,
+            } : undefined}
+          />
+        )}
+
+        {/* ── Dark overlay (configurable opacity) ── */}
+        <div
+          className="absolute inset-0 bg-black"
+          style={{ opacity: overlayOpacity }}
+        />
+
+        {/* ── Fallback gradient blobs (visible when no media, subtle when media present) ── */}
+        {!hasMedia && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-[#111310] to-zinc-950" />
+            <motion.div style={{ y: blob1Y }} className="absolute -top-48 -right-48 w-[700px] h-[700px] rounded-full bg-joy-green/[0.07] blur-[160px] pointer-events-none" />
+            <motion.div style={{ y: blob2Y }} className="absolute -bottom-64 -left-32 w-[600px] h-[600px] rounded-full bg-teal-800/[0.12] blur-[130px] pointer-events-none" />
+          </>
+        )}
+
+        {/* ── Grain texture ── */}
+        <div className="absolute inset-0 opacity-[0.025] pointer-events-none" style={{ backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)`, backgroundSize: "44px 44px" }} />
+
+        {/* ── Bottom fade ── */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0d0f0d]/80 to-transparent pointer-events-none" />
       </div>
 
       {/* Content */}
