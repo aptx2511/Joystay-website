@@ -4,7 +4,7 @@ import Navbar            from "@/components/layout/Navbar";
 import Footer            from "@/components/layout/Footer";
 import HeroSection       from "@/components/home/HeroSection";
 import AboutSection      from "@/components/home/AboutSection";
-import RoomShowcase      from "@/components/home/RoomShowcase";
+import RoomScrollStory   from "@/components/home/RoomScrollStory";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import BlogPreview       from "@/components/home/BlogPreview";
 import CTABanner         from "@/components/home/CTABanner";
@@ -46,7 +46,7 @@ export default async function HomePage() {
       <main>
         <HeroSection heroBackground={settings?.heroBackground ?? null} />
         <AboutSection />
-        <RoomShowcase rooms={rooms} />
+        <RoomScrollStory rooms={rooms} />
         <TestimonialsSection reviews={allReviews} google={googleSummary} />
         <BlogPreview posts={posts} />
         <CTABanner promoCode={ctaPromo} />
