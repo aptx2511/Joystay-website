@@ -25,13 +25,19 @@ const SOURCE_BADGE: Record<string, { label: string; bg: string; dot: string }> =
   Direct:  { label: "Direct",  bg: "bg-joy-warm border-joy-border text-joy-muted", dot: "bg-joy-green" },
 };
 
-export default function TestimonialsSection({ reviews }: { reviews: Review[] }) {
+export interface GoogleSummary { rating: number; total: number; mapsUrl: string; writeUrl: string }
+
+export default function TestimonialsSection({ reviews, google }: { reviews: Review[]; google?: GoogleSummary | null }) {
   const { lang } = useLang();
 
   const totalReviews = reviews.length;
-  const avgRating = totalReviews
-    ? (reviews.reduce((s, r) => s + r.rating, 0) / totalReviews).toFixed(1)
-    : "5.0";
+  // Ưu tiên điểm tổng của Google (tính trên toàn bộ đánh giá), nếu không có thì tính trung bình các đánh giá đang hiển thị
+  const avgRating = google && google.total > 0
+    ? google.rating.toFixed(1)
+    : totalReviews ? (reviews.reduce((s, r) => s + r.rating, 0) / totalReviews).toFixed(1) : "5.0";
+  const countLabel = google && google.total > 0
+    ? `${google.total} ${tx(T.testimonials.reviews, lang)} ${tx(T.testimonials.google, lang)}`
+    : `${totalReviews} ${tx(T.testimonials.reviews, lang)}`;
 
   return (
     <section className="bg-joy-cream py-24 sm:py-32">
@@ -44,19 +50,19 @@ export default function TestimonialsSection({ reviews }: { reviews: Review[] }) 
             titleItalic={tx(T.testimonials.italic, lang)}
             center
           />
-          <div className="flex items-center justify-center gap-1 mt-6">
+          {totalReviews > 0 && <div className="flex items-center justify-center gap-1 mt-6">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star key={i} size={16} className="text-joy-green fill-joy-green" />
             ))}
             <span className="ml-2 font-sans text-sm text-joy-muted">
-              {avgRating} · {totalReviews} {tx(T.testimonials.reviews, lang)}
+              {avgRating} · {countLabel}
             </span>
-          </div>
+          </div>}
         </div>
 
         {reviews.length === 0 ? (
           <p className="text-center text-joy-muted font-sans text-sm">
-            {lang === "vi" ? "Chưa có đánh giá nào." : "No reviews yet."}
+            {lang === "vi" ? "Bạn đã ở Joystay? Chia sẻ cảm nhận của bạn trên Google nhé." : "Stayed with us? Share your experience on Google."}
           </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -118,11 +124,27 @@ export default function TestimonialsSection({ reviews }: { reviews: Review[] }) 
           </div>
         )}
 
-        <div className="mt-10 text-center">
-          <span className="inline-flex items-center gap-2 font-sans text-xs text-joy-muted bg-white border border-joy-border px-5 py-2.5 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-rose-500" />
-            {tx(T.testimonials.verified, lang)}
-          </span>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          {totalReviews > 0 && (
+            google?.mapsUrl ? (
+              <a href={google.mapsUrl} target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-2 font-sans text-xs text-joy-muted bg-white border border-joy-border px-5 py-2.5 rounded-full hover:border-joy-green">
+                <span className="w-2 h-2 rounded-full bg-joy-green" />
+                {tx(T.testimonials.verified, lang)}
+              </a>
+            ) : (
+              <span className="inline-flex items-center gap-2 font-sans text-xs text-joy-muted bg-white border border-joy-border px-5 py-2.5 rounded-full">
+                <span className="w-2 h-2 rounded-full bg-joy-green" />
+                {tx(T.testimonials.verified, lang)}
+              </span>
+            )
+          )}
+          {google?.writeUrl && (
+            <a href={google.writeUrl} target="_blank" rel="noreferrer"
+              className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-joy-green bg-white border border-joy-border px-5 py-2.5 rounded-full hover:border-joy-green">
+              ★ {tx(T.testimonials.writeReview, lang)}
+            </a>
+          )}
         </div>
       </div>
     </section>

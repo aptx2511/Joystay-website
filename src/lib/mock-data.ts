@@ -38,6 +38,11 @@ export type Room = {
   featuredImage?: string;
   featuredImageHotspot?: { x: number; y: number };
   gallery?: RoomGallery;
+  galleryPreview?: string[]; // ảnh cho khối phòng trang chủ (ALL_ROOMS_QUERY)
+  // Bổ sung từ room-facts.ts (đồng bộ Airbnb)
+  roomNumber?: string;
+  floor?: number;
+  hasWindow?: boolean;
 };
 
 export type Testimonial = {
@@ -235,10 +240,10 @@ export const BLOG_POSTS: BlogPost[] = [
 export const USPS = [
   {
     icon: "MapPin",
-    title: "Prime District 1 Location",
-    titleVi: "Trung Tâm Quận 1",
-    description: "Nestled in a quiet alley, yet 5 minutes walk to Bui Vien, Ben Thanh Market, and Nguyen Hue Boulevard.",
-    descriptionVi: "Nằm trong con hẻm yên tĩnh, chỉ 5 phút đi bộ đến Bùi Viện, Chợ Bến Thành và Đại lộ Nguyễn Huệ.",
+    title: "Prime District 3 Location",
+    titleVi: "Trung Tâm Quận 3",
+    description: "Wide, car-accessible laneway off Nguyễn Thị Minh Khai in District 3 — a short ride to Tao Đàn Park, Ben Thanh Market, and central Saigon.",
+    descriptionVi: "Hẻm rộng rãi, xe hơi vào được trên đường Nguyễn Thị Minh Khai tại Quận 3 — chỉ một đoạn ngắn tới Công viên Tao Đàn, Chợ Bến Thành và trung tâm Sài Gòn.",
   },
   {
     icon: "KeyRound",

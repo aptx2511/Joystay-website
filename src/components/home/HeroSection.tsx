@@ -135,7 +135,7 @@ export default function HeroSection({ heroBackground }: Props) {
           {([
             { value: "5",      label: tx(T.hero.stat1lbl, lang) },
             { value: "24/7",   label: tx(T.hero.stat2lbl, lang) },
-            { value: "5 min",  label: tx(T.hero.stat3lbl, lang) },
+            { value: "100%",   label: tx(T.hero.stat3lbl, lang) },
           ] as const).map((stat, i) => (
             <motion.div key={stat.label} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 1.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}>

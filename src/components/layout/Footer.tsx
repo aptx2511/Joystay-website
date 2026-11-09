@@ -8,11 +8,12 @@ import { T } from "@/lib/translations";
 import { useSettings } from "@/lib/settings-context";
 
 const ROOM_LINKS = [
-  { label: "Pop Art Studio",    href: "/rooms/pop-art-studio"  },
-  { label: "Monochrome Studio",  href: "/rooms/bw-studio-large" },
-  { label: "Indochine 1",       href: "/rooms/indochine-room"  },
-  { label: "Tropical Oasis Room", href: "/rooms/midcentury-room" },
-  { label: "Indochine 2",       href: "/rooms/bw-room-small"   },
+  { label: "Matcha Bath Loft w/ Indoor Tub", href: "/rooms/matcha-bath-loft" },
+  { label: "Pop Art Studio w/ Kitchen",      href: "/rooms/pop-art-studio"   },
+  { label: "Parisian Chic Room w/ Kitchen",  href: "/rooms/bw-studio-large"  },
+  { label: "Cozy Indochine Sleep Cave",      href: "/rooms/indochine-room-1" },
+  { label: "The Indochine Midnight Hideout", href: "/rooms/indochine-room-2" },
+  { label: "The Tropical Oasis Room",        href: "/rooms/tropical-room"    },
 ];
 
 export default function Footer() {
@@ -71,6 +72,8 @@ export default function Footer() {
           </h4>
           <ul className="space-y-3 text-sm">
             {[
+              { en: lang === "vi" ? "Lịch phòng trống" : "Availability", href: "/availability" },
+              { en: lang === "vi" ? "Cẩm nang lưu trú" : "Guest Guide", href: "/guide" },
               { en: tx(T.footer.blog, lang),       href: "/blog"    },
               { en: tx(T.footer.contactUs, lang),  href: "/contact" },
               { en: tx(T.footer.bookDirect, lang), href: "/rooms"   },

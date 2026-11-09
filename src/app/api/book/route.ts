@@ -8,7 +8,11 @@ export async function POST(request: Request) {
 
     const res = await fetch(`${PMS_URL}/api/bookings`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // Khoá máy chủ ↔ PMS (Ops 2.0). Biến chỉ ở server, không lộ ra trình duyệt.
+        ...(process.env.PMS_API_KEY ? { "x-api-key": process.env.PMS_API_KEY } : {}),
+      },
       body: JSON.stringify(body),
       cache: "no-store",
     });

@@ -33,11 +33,11 @@ export const metadata: Metadata = {
     template: "%s | Joystay Vietnam",
   },
   description:
-    "Boutique Homestay & Serviced Apartments in District 1, Ho Chi Minh City. 5 uniquely designed rooms. Self check-in 24/7. Book direct for the best rate.",
-  keywords: ["boutique homestay", "District 1", "Ho Chi Minh City", "Saigon", "serviced apartment", "self checkin"],
+    "Boutique Homestay & Serviced Apartments in District 3, Ho Chi Minh City. 6 uniquely designed rooms. Self check-in 24/7. Book direct, no platform fees.",
+  keywords: ["boutique homestay", "District 3", "Ho Chi Minh City", "Saigon", "serviced apartment", "self checkin"],
   openGraph: {
     title: "Joystay Vietnam — The Art of Stay",
-    description: "5 artistically designed rooms in the heart of District 1, Saigon.",
+    description: "6 artistically designed rooms in the heart of District 3, Saigon.",
     locale: "en_US",
     type: "website",
   },

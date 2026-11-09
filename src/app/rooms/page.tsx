@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Our Rooms",
-  description: "5 artistically designed rooms in the heart of District 1, Saigon. Choose your concept.",
+  description: "6 artistically designed rooms in the heart of District 3, Saigon. Choose your concept.",
 };
 
 export default async function RoomsPage() {

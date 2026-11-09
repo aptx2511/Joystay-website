@@ -5,12 +5,17 @@ import { ArrowRight, Users, Maximize2, Utensils, Wifi, AirVent, Tv } from "lucid
 import type { Room } from "@/lib/mock-data";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
+import { amenityLabel, floorLabel, bedLabel } from "@/lib/room-facts";
 
 const AMENITY_ICONS: Record<string, React.ReactNode> = {
   "Full Kitchen": <Utensils size={12} />,
   "WiFi":         <Wifi size={12} />,
   "AC":           <AirVent size={12} />,
   "Smart TV":     <Tv size={12} />,
+  "Wifi":             <Wifi size={12} />,
+  "Air conditioning": <AirVent size={12} />,
+  "TV":               <Tv size={12} />,
+  "Kitchen":          <Utensils size={12} />,
 };
 
 export default function RoomsListing({ rooms }: { rooms: Room[] }) {
@@ -123,7 +128,11 @@ export default function RoomsListing({ rooms }: { rooms: Room[] }) {
                   </p>
 
                   <div className="flex flex-wrap gap-4 text-xs font-sans text-joy-muted mb-5">
+                    {room.roomNumber && (
+                      <span>{lang === "vi" ? "Phòng" : "Room"} {room.roomNumber} · {floorLabel(room.floor ?? 0, lang)}</span>
+                    )}
                     <span className="flex items-center gap-1.5"><Maximize2 size={13} className="text-joy-green" /> {room.size} m²</span>
+                    {room.bedType && <span>🛏 {bedLabel(room.bedType, lang)}</span>}
                     <span className="flex items-center gap-1.5">
                       <Users size={13} className="text-joy-green" />
                       {tx(T.rooms.maxGuests, lang)} {room.maxGuests} {lang === "en" ? "guests" : "khách"}
@@ -133,7 +142,7 @@ export default function RoomsListing({ rooms }: { rooms: Room[] }) {
                   <div className="flex flex-wrap gap-2">
                     {room.amenities.slice(0, 5).map((a) => (
                       <span key={a} className="inline-flex items-center gap-1.5 bg-joy-warm border border-joy-border text-joy-ink text-xs font-sans px-3 py-1 rounded-full">
-                        {AMENITY_ICONS[a] ?? null}{a}
+                        {AMENITY_ICONS[a] ?? null}{amenityLabel(a, lang)}
                       </span>
                     ))}
                     {room.amenities.length > 5 && (

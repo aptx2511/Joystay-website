@@ -9,7 +9,7 @@ interface Props {
 
 export const metadata: Metadata = {
   title: "Book a Room — Joystay Vietnam",
-  description: "Complete your booking at Joystay Vietnam boutique homestay, District 1, Ho Chi Minh City.",
+  description: "Complete your booking at Joystay Vietnam boutique homestay, District 3, Ho Chi Minh City.",
 };
 
 export default async function CheckoutPage({ searchParams }: Props) {

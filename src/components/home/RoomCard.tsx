@@ -77,6 +77,7 @@ export default function RoomCard({ room, index }: RoomCardProps) {
           </p>
 
           <div className="flex items-center gap-3 text-white/30 text-[10px] font-sans mb-5">
+            {room.roomNumber && (<><span>{lang === "vi" ? "P." : "Room"} {room.roomNumber}</span><span className="w-px h-3 bg-white/15" /></>)}
             <span className="flex items-center gap-1.5"><Maximize2 size={10} strokeWidth={1.5} />{room.size} m²</span>
             <span className="w-px h-3 bg-white/15" />
             <span className="flex items-center gap-1.5"><Users size={10} strokeWidth={1.5} />Max {room.maxGuests}</span>

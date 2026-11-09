@@ -8,6 +8,8 @@ import { ArrowLeft, Maximize2, Users, Wifi, AirVent, Tv, Utensils,
          ShowerHead, WashingMachine, Coffee, ArrowRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Room, GalleryImage } from "@/lib/mock-data";
 import AvailabilityCalendar from "./AvailabilityCalendar";
+import { useLang } from "@/lib/lang-context";
+import { amenityLabel, floorLabel, bedLabel } from "@/lib/room-facts";
 
 const AMENITY_ICONS: Record<string, React.ReactNode> = {
   "Full Kitchen":  <Utensils size={15} />,
@@ -19,6 +21,15 @@ const AMENITY_ICONS: Record<string, React.ReactNode> = {
   "Shower":        <ShowerHead size={15} />,
   "Mini Fridge":   <Coffee size={15} />,
   "Bathtub":       <ShowerHead size={15} />,
+  // Tên tiện ích theo Airbnb (room-facts.ts)
+  "Wifi":             <Wifi size={15} />,
+  "Air conditioning": <AirVent size={15} />,
+  "TV":               <Tv size={15} />,
+  "Kitchen":          <Utensils size={15} />,
+  "Cooking basics":   <Utensils size={15} />,
+  "Dryer":            <WashingMachine size={15} />,
+  "Kitchenette":      <Utensils size={15} />,
+  "Hot water":        <ShowerHead size={15} />,
 };
 
 const GALLERY_TABS = [
@@ -32,6 +43,7 @@ const GALLERY_TABS = [
 type GalleryKey = typeof GALLERY_TABS[number]["key"];
 
 export default function RoomDetail({ room }: { room: Room }) {
+  const { lang } = useLang();
   const gallery = room.gallery ?? {};
   const availableTabs = GALLERY_TABS.filter((t) => {
     const imgs = gallery[t.key];
@@ -95,9 +107,13 @@ export default function RoomDetail({ room }: { room: Room }) {
             <p className="font-sans text-white/70 text-base mt-2 italic">{room.tagline}</p>
           )}
           <div className="flex flex-wrap items-center gap-6 mt-4 text-white/60 font-sans text-sm">
+            {room.roomNumber && (
+              <span>{lang === "vi" ? "Phòng" : "Room"} {room.roomNumber} · {floorLabel(room.floor ?? 0, lang)}</span>
+            )}
             <span className="flex items-center gap-2"><Maximize2 size={14} /> {room.size} m²</span>
-            <span className="flex items-center gap-2"><Users size={14} /> Tối đa {room.maxGuests} khách</span>
-            {room.bedType && <span>🛏 {room.bedType}</span>}
+            <span className="flex items-center gap-2"><Users size={14} /> {lang === "vi" ? `Tối đa ${room.maxGuests} khách` : `Up to ${room.maxGuests} guests`}</span>
+            {room.bedType && <span>🛏 {bedLabel(room.bedType, lang)}</span>}
+            {room.hasWindow === false && <span>{lang === "vi" ? "Không có cửa sổ" : "No window"}</span>}
             <span className={`px-3 py-1 rounded-full text-xs font-semibold
                               ${room.isAvailable ? "bg-joy-green/20 text-green-300" : "bg-red-500/20 text-red-300"}`}>
               {room.isAvailable ? "Available" : "Unavailable"}
@@ -171,12 +187,12 @@ export default function RoomDetail({ room }: { room: Room }) {
             </div>
 
             <div>
-              <h2 className="font-serif text-2xl text-joy-ink font-light mb-5">Amenities</h2>
+              <h2 className="font-serif text-2xl text-joy-ink font-light mb-5">{lang === "vi" ? "Tiện ích" : "Amenities"}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {room.amenities.map((a) => (
                   <div key={a} className="flex items-center gap-3 bg-white border border-joy-border rounded-xl px-4 py-3">
                     <span className="text-joy-green">{AMENITY_ICONS[a] ?? <Coffee size={15} />}</span>
-                    <span className="font-sans text-sm text-joy-ink">{a}</span>
+                    <span className="font-sans text-sm text-joy-ink">{amenityLabel(a, lang)}</span>
                   </div>
                 ))}
               </div>

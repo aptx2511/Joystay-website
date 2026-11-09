@@ -19,7 +19,7 @@ export type SiteContact = {
 const DEFAULTS = {
   phone: "(+84) 0898 888 457",
   email: "booking@joystay.vn",
-  address: "382/23 Nguyễn Thị Minh Khai, Phường Bàn Cờ, TP. Hồ Chí Minh",
+  address: "382/23 Nguyễn Thị Minh Khai, Phường Bàn Cờ, Quận 3, TP. Hồ Chí Minh",
   zaloLink: "https://zalo.me/0898888457",
 };
 

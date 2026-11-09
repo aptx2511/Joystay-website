@@ -9,13 +9,13 @@ export const T = {
   },
 
   hero: {
-    eyebrow:  { en: "District 1 · Ho Chi Minh City · Vietnam", vi: "Quận 1 · TP. Hồ Chí Minh · Việt Nam" },
+    eyebrow:  { en: "District 3 · Ho Chi Minh City · Vietnam", vi: "Quận 3 · TP. Hồ Chí Minh · Việt Nam" },
     heading1: { en: "The Art",   vi: "Nghệ Thuật"           },
     heading2: { en: "of Stay",   vi: "Của Sự Lưu Trú"      },
     tagline:  { en: "Boutique Homestay & Serviced Apartments", vi: "Homestay Boutique & Căn Hộ Dịch Vụ" },
     stat1lbl: { en: "Art Concepts",  vi: "Concept NT"        },
     stat2lbl: { en: "Self Check-In", vi: "Tự Check-In"       },
-    stat3lbl: { en: "to Bui Vien",   vi: "đến Bùi Viện"     },
+    stat3lbl: { en: "Contactless",   vi: "Không tiếp xúc"   },
   },
 
   booking: {
@@ -25,7 +25,7 @@ export const T = {
     guest1:    { en: "1 Guest",   vi: "1 Khách"    },
     guest2:    { en: "2 Guests",  vi: "2 Khách"    },
     cta:       { en: "Check Availability", vi: "Kiểm Tra Phòng" },
-    guarantee: { en: "✦ Best rate guaranteed when you book direct", vi: "✦ Giá tốt nhất khi đặt trực tiếp" },
+    guarantee: { en: "✦ Book direct — no platform fees", vi: "✦ Đặt trực tiếp — không mất phí nền tảng" },
   },
 
   about: {
@@ -33,22 +33,22 @@ export const T = {
     title:    { en: "A quiet alley.", vi: "Một con hẻm yên tĩnh." },
     italic:   { en: "A world of art.", vi: "Một thế giới nghệ thuật." },
     subtitle: {
-      en: "Tucked into a peaceful lane at 245 Nguyễn Trãi, we are 5 minutes from Bùi Viện, Bến Thành Market, and Nguyễn Huệ Boulevard — yet completely away from the noise.",
-      vi: "Nằm trong con hẻm yên bình tại 245 Nguyễn Trãi, chúng tôi cách Bùi Viện, Chợ Bến Thành và Đại lộ Nguyễn Huệ chỉ 5 phút đi bộ — nhưng hoàn toàn tách biệt khỏi sự ồn ào.",
+      en: "Located in a wide, car-accessible laneway at 382/23 Nguyễn Thị Minh Khai, we're a short ride from Tao Đàn Park, Ben Thanh Market, and the best of central Saigon.",
+      vi: "Tọa lạc trong con hẻm rộng, xe hơi vào được tại 382/23 Nguyễn Thị Minh Khai, chỉ một đoạn ngắn là tới Công viên Tao Đàn, Chợ Bến Thành và trung tâm Sài Gòn.",
     },
     quote: {
       en: "Each room is a distinct visual world. Guests don't just sleep here — they experience something.",
       vi: "Mỗi phòng là một thế giới hình ảnh riêng biệt. Khách không chỉ ngủ ở đây — họ trải nghiệm điều gì đó.",
     },
-    quoteAuthor: { en: "— Joystay, District 1", vi: "— Joystay, Quận 1" },
+    quoteAuthor: { en: "— Joystay, District 3", vi: "— Joystay, Quận 3" },
   },
 
   showcase: {
     tag:     { en: "Our Rooms",      vi: "Phòng Của Chúng Tôi"  },
-    title:   { en: "5 Art Spaces",   vi: "5 Không Gian"          },
+    title:   { en: "6 Art Spaces",   vi: "6 Không Gian"          },
     italic:  { en: "to Live In",     vi: "Sống Nghệ Thuật"       },
     viewAll: { en: "View All Rooms", vi: "Xem Tất Cả Phòng"      },
-    exploreAll: { en: "Explore all\n5 rooms", vi: "Khám phá cả\n5 phòng" },
+    exploreAll: { en: "Explore all\n6 rooms", vi: "Khám phá cả\n6 phòng" },
     swipe:   { en: "← swipe to explore →", vi: "← vuốt để khám phá →" },
   },
 
@@ -63,8 +63,10 @@ export const T = {
     tag:      { en: "Guest Reviews",  vi: "Đánh Giá Khách"            },
     title:    { en: "Words from",     vi: "Cảm Nhận Từ"               },
     italic:   { en: "Our Guests",     vi: "Khách Của Chúng Tôi"       },
-    reviews:  { en: "5.0 · 100+ reviews on Airbnb", vi: "5.0 · 100+ đánh giá trên Airbnb" },
-    verified: { en: "All reviews verified via Airbnb", vi: "Tất cả đánh giá được xác minh qua Airbnb" },
+    reviews:  { en: "reviews", vi: "đánh giá" },
+    verified: { en: "Real reviews from Google & Airbnb guests", vi: "Đánh giá thật từ khách trên Google & Airbnb" },
+    google:   { en: "on Google", vi: "trên Google" },
+    writeReview: { en: "Write a Google review", vi: "Viết đánh giá Google" },
   },
 
   blog: {
@@ -81,8 +83,8 @@ export const T = {
     pageTitle:   { en: "Stories &",    vi: "Câu Chuyện &" },
     pageItalic:  { en: "Saigon Guides", vi: "Cẩm Nang Sài Gòn" },
     pageSubtitle: {
-      en: "Local tips, hidden gems, and travel guides from our team — so you can experience District 1 like a local.",
-      vi: "Mẹo địa phương, điểm ẩn và hướng dẫn du lịch từ đội ngũ của chúng tôi — để bạn trải nghiệm Quận 1 như người bản địa.",
+      en: "Local tips, hidden gems, and travel guides from our team — so you can experience District 3 & Saigon like a local.",
+      vi: "Mẹo địa phương, điểm ẩn và hướng dẫn du lịch từ đội ngũ của chúng tôi — để bạn trải nghiệm Quận 3 & Sài Gòn như người bản địa.",
     },
     filterAll:   { en: "All",           vi: "Tất Cả"    },
     readMin:     { en: "min read",      vi: "phút đọc"  },
@@ -95,12 +97,12 @@ export const T = {
   },
 
   cta: {
-    tag:    { en: "Book Direct · Best Rate Guaranteed", vi: "Đặt Trực Tiếp · Giá Tốt Nhất" },
+    tag:    { en: "Book Direct · No Platform Fees", vi: "Đặt Trực Tiếp · Không Phí Nền Tảng" },
     title:  { en: "Ready to Experience",  vi: "Sẵn Sàng Trải Nghiệm"          },
     italic: { en: "The Art of Stay?",     vi: "Nghệ Thuật Của Sự Lưu Trú?"    },
     desc:   {
-      en: "Book directly with us and save up to 15% vs. Airbnb. Flexible cancellation, instant confirmation, and a personal welcome message from our team.",
-      vi: "Đặt trực tiếp với chúng tôi và tiết kiệm đến 15% so với Airbnb. Hủy linh hoạt, xác nhận ngay lập tức và tin nhắn chào mừng từ đội ngũ của chúng tôi.",
+      en: "Book directly with us — no platform service fees. Flexible cancellation, instant confirmation, and a personal welcome message from our team.",
+      vi: "Đặt trực tiếp với chúng tôi — không mất phí dịch vụ nền tảng. Hủy linh hoạt, xác nhận ngay lập tức và tin nhắn chào mừng từ đội ngũ của chúng tôi.",
     },
     promo:   { en: "— 10% off your first direct booking", vi: "— Giảm 10% lần đặt trực tiếp đầu tiên" },
     bookBtn: { en: "Check Availability", vi: "Kiểm Tra Phòng Trống" },
@@ -112,11 +114,11 @@ export const T = {
 
   rooms: {
     tag:         { en: "Our Rooms",        vi: "Phòng Của Chúng Tôi"   },
-    title:       { en: "5 Art Spaces",     vi: "5 Không Gian"          },
+    title:       { en: "6 Art Spaces",     vi: "6 Không Gian"          },
     italic:      { en: "to Live In",       vi: "Sống Nghệ Thuật"       },
     subtitle:    {
-      en: "From pop art boldness to Indochine quiet — every room is a distinct visual world. Book direct for the best rate.",
-      vi: "Từ sự táo bạo của Pop Art đến sự yên tĩnh Đông Dương — mỗi phòng là một thế giới riêng biệt. Đặt trực tiếp để có giá tốt nhất.",
+      en: "From pop art boldness to Indochine quiet — every room is a distinct visual world. Book direct, no platform fees.",
+      vi: "Từ sự táo bạo của Pop Art đến sự yên tĩnh Đông Dương — mỗi phòng là một thế giới riêng biệt. Đặt trực tiếp, không mất phí nền tảng.",
     },
     filterAll:   { en: "All Rooms",           vi: "Tất Cả Phòng"      },
     filterShort: { en: "Short Stay",          vi: "Lưu Ngắn Hạn"      },
@@ -236,8 +238,8 @@ export const T = {
   footer: {
     tagline:    { en: "The Art of Stay", vi: "Nghệ Thuật Của Sự Lưu Trú" },
     about:      {
-      en: "A boutique homestay experience in the heart of District 1, Saigon. Where art, quiet, and convenience meet.",
-      vi: "Trải nghiệm homestay boutique tại trung tâm Quận 1, Sài Gòn. Nơi nghệ thuật, sự yên tĩnh và tiện nghi gặp nhau.",
+      en: "A boutique homestay experience in District 3, Saigon. Where art, accessibility, and convenience meet.",
+      vi: "Trải nghiệm homestay boutique tại Quận 3, Sài Gòn. Nơi nghệ thuật, sự thuận tiện và tiện nghi gặp nhau.",
     },
     roomsTitle:  { en: "Our Rooms",          vi: "Phòng Của Chúng Tôi"   },
     linksTitle:  { en: "Quick Links",        vi: "Liên Kết Nhanh"        },

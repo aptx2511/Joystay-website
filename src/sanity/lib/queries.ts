@@ -8,6 +8,7 @@ export const ALL_ROOMS_QUERY = `
     size,
     maxGuests,
     pricePerNight,
+    weekendPrice,
     pricePerMonth,
     securityDeposit,
     stayType,
@@ -25,7 +26,15 @@ export const ALL_ROOMS_QUERY = `
       galleryBathroom[0].asset->url,
       galleryOther[0].asset->url
     ),
-    "featuredImageHotspot": featuredImage.hotspot
+    "featuredImageHotspot": featuredImage.hotspot,
+    // Ảnh vuốt ngang trong khối phòng trên trang chủ (tối đa ~6 ảnh)
+    "galleryPreview": [
+      ...coalesce(galleryLiving[0..1].asset->url, []),
+      ...coalesce(galleryBedroom[0..1].asset->url, []),
+      ...coalesce(galleryKitchen[0..0].asset->url, []),
+      ...coalesce(galleryBathroom[0..0].asset->url, []),
+      ...coalesce(galleryOther[0..0].asset->url, [])
+    ]
   }
 `;
 

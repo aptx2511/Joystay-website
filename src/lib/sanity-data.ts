@@ -9,6 +9,7 @@ import {
   REVIEWS_QUERY,
 } from "@/sanity/lib/queries";
 import { ROOMS, BLOG_POSTS } from "./mock-data";
+import { applyFacts, sortRooms } from "./room-facts";
 import type { Room, BlogPost } from "./mock-data";
 
 const USE_SANITY = isSanityConfigured;
@@ -16,6 +17,10 @@ const USE_SANITY = isSanityConfigured;
 // ── Rooms ────────────────────────────────────────────────────────────────────
 
 export async function getRooms(): Promise<Room[]> {
+  return sortRooms((await getRoomsRaw()).map(applyFacts));
+}
+
+async function getRoomsRaw(): Promise<Room[]> {
   if (!USE_SANITY) return ROOMS;
   try {
     const data = await client.fetch(ALL_ROOMS_QUERY, {}, { cache: "no-store" });
@@ -27,6 +32,11 @@ export async function getRooms(): Promise<Room[]> {
 }
 
 export async function getRoomBySlug(slug: string): Promise<Room | null> {
+  const r = await getRoomBySlugRaw(slug);
+  return r ? applyFacts(r) : null;
+}
+
+async function getRoomBySlugRaw(slug: string): Promise<Room | null> {
   if (!USE_SANITY) return ROOMS.find((r) => r.slug === slug) ?? null;
   try {
     const data = await client.fetch(ROOM_BY_SLUG_QUERY, { slug }, { cache: "no-store" });

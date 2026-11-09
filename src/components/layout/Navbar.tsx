@@ -12,6 +12,8 @@ import { useSettings } from "@/lib/settings-context";
 const NAV_LINKS: { en: string; vi: string; href: string }[] = [
   { en: "Home",    vi: "Trang Chủ", href: "/"        },
   { en: "Rooms",   vi: "Phòng",     href: "/rooms"   },
+  { en: "Availability", vi: "Lịch Trống", href: "/availability" },
+  { en: "Guide",   vi: "Cẩm Nang",  href: "/guide"   },
   { en: "Blog",    vi: "Blog",      href: "/blog"    },
   { en: "Contact", vi: "Liên Hệ",   href: "/contact" },
 ];

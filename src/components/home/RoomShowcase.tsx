@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { useRef, useState, useCallback } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import RoomCard from "./RoomCard";
 import type { Room } from "@/lib/mock-data";
 import { useLang, tx } from "@/lib/lang-context";
@@ -9,6 +10,24 @@ import { T } from "@/lib/translations";
 
 export default function RoomShowcase({ rooms }: { rooms: Room[] }) {
   const { lang } = useLang();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const CARD_W = 336; // w-80 (320) + gap (20) ≈ 340, rounding to card step
+
+  const updateScrollState = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 8);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8);
+  }, []);
+
+  const scroll = (dir: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "right" ? CARD_W : -CARD_W, behavior: "smooth" });
+  };
 
   return (
     <section id="rooms" className="bg-joy-charcoal py-24 sm:py-32 overflow-hidden">
@@ -24,14 +43,46 @@ export default function RoomShowcase({ rooms }: { rooms: Room[] }) {
               <span className="text-joy-green-light italic">{tx(T.showcase.italic, lang)}</span>
             </h2>
           </div>
-          <Link href="/rooms" className="btn-ghost-light shrink-0 self-start sm:self-auto">
-            {tx(T.showcase.viewAll, lang)} <ArrowRight size={14} />
-          </Link>
+
+          <div className="flex items-center gap-3 self-start sm:self-auto">
+            {/* Prev / Next buttons */}
+            <button
+              onClick={() => scroll("left")}
+              disabled={!canScrollLeft}
+              aria-label="Previous rooms"
+              className="hidden sm:flex w-10 h-10 rounded-full border border-white/15 items-center justify-center text-white/40 hover:border-joy-green hover:text-joy-green transition-colors duration-300 disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:border-white/15 disabled:hover:text-white/40"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <button
+              onClick={() => scroll("right")}
+              disabled={!canScrollRight}
+              aria-label="Next rooms"
+              className="hidden sm:flex w-10 h-10 rounded-full border border-white/15 items-center justify-center text-white/40 hover:border-joy-green hover:text-joy-green transition-colors duration-300 disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:border-white/15 disabled:hover:text-white/40"
+            >
+              <ChevronRight size={16} />
+            </button>
+
+            <Link href="/rooms" className="btn-ghost-light shrink-0">
+              {tx(T.showcase.viewAll, lang)} <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
 
         <div className="relative">
+          {/* Right fade hint */}
           <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-joy-charcoal to-transparent pointer-events-none z-10" />
-          <div className="flex gap-5 overflow-x-auto pb-6 -mx-5 px-5 sm:-mx-8 sm:px-8 scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {/* Left fade hint (shows when scrolled) */}
+          <div
+            className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-joy-charcoal to-transparent pointer-events-none z-10 transition-opacity duration-300"
+            style={{ opacity: canScrollLeft ? 1 : 0 }}
+          />
+
+          <div
+            ref={scrollRef}
+            onScroll={updateScrollState}
+            className="flex gap-5 overflow-x-auto pb-6 -mx-5 px-5 sm:-mx-8 sm:px-8 scroll-smooth snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
             {rooms.map((room, idx) => (
               <div key={room.id} className="snap-start">
                 <RoomCard room={room} index={idx} />
