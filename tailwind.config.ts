@@ -22,6 +22,7 @@ const config: Config = {
           border:       "#C8DCC6",   // sage green border
         },
       },
+      borderRadius: { xl: "1rem", "2xl": "1.5rem", "3xl": "2rem" },   // bo góc nhiều hơn trên toàn site (14/11/2026)
       fontFamily: {
         serif: ["var(--font-cormorant)", "Georgia", "serif"],
         sans:  ["var(--font-jakarta)", "system-ui", "sans-serif"],

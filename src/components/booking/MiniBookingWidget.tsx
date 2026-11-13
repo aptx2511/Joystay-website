@@ -29,7 +29,7 @@ export default function MiniBookingWidget() {
 
   return (
     <div className="w-full max-w-3xl">
-      <div className="bg-joy-cream text-joy-ink rounded-2xl shadow-2xl overflow-hidden grid grid-cols-2 sm:grid-cols-[1fr_1fr_0.8fr_auto]">
+      <div className="bg-joy-cream text-joy-ink rounded-[1.75rem] shadow-2xl overflow-hidden grid grid-cols-2 sm:grid-cols-[1fr_1fr_0.8fr_auto]">
         <div className="px-4 py-3 border-r border-joy-border">
           <label htmlFor="mb-in" className={label}>{tx(T.booking.checkIn, lang)}</label>
           <input id="mb-in" type="date" value={checkIn} min={today} onChange={(e) => setCheckIn(e.target.value)} className={field} />

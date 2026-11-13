@@ -22,7 +22,7 @@ export default function HeroSection({ heroBackground }: { heroBackground?: HeroB
   const veil = Math.min((heroBackground?.overlayOpacity ?? 60) / 100, 1) * 0.3;
 
   return (
-    <section className="relative min-h-[86svh] max-h-[900px] flex items-end overflow-hidden bg-joy-charcoal text-white">
+    <section className="relative min-h-[86svh] max-h-[900px] flex items-end overflow-hidden bg-joy-charcoal text-white rounded-b-[2rem] sm:rounded-b-[3rem]">
       {isVideo && (
         <video key={heroBackground!.videoUrl} autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
           <source src={heroBackground!.videoUrl} type="video/mp4" />

@@ -29,7 +29,7 @@ export default function HomeTools() {
         {items.map(({ href, c }) => (
           <Reveal key={href}>
             <Link href={href}
-              className="group block h-full rounded-2xl border border-joy-border bg-joy-cream/60 p-7 sm:p-10 hover:bg-white hover:border-joy-green transition-colors duration-300">
+              className="group block h-full rounded-[2rem] border border-joy-border bg-joy-cream/60 p-7 sm:p-10 hover:bg-white hover:border-joy-green transition-colors duration-300">
               <span className="section-tag">{c.tag[lang]}</span>
               <h3 className="font-serif text-3xl sm:text-4xl font-medium text-joy-ink leading-[1.05] mt-3 mb-2">{c.title[lang]}</h3>
               <p className="font-sans text-[15px] text-joy-muted max-w-md mb-5">{c.body[lang]}</p>

@@ -20,7 +20,7 @@ export default function AboutSection({ image }: { image?: string | null }) {
           <Reveal>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={sized(image, 1100)} alt="Joystay" loading="lazy"
-              className="w-full aspect-[3/2] lg:aspect-[4/5] object-cover rounded-2xl bg-joy-warm" />
+              className="w-full aspect-[3/2] lg:aspect-[4/5] object-cover rounded-[2rem] bg-joy-warm" />
           </Reveal>
         )}
         <Reveal>
