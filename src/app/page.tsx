@@ -6,9 +6,10 @@ import HeroSection       from "@/components/home/HeroSection";
 import AboutSection      from "@/components/home/AboutSection";
 import RoomScrollStory   from "@/components/home/RoomScrollStory";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
-import BlogPreview       from "@/components/home/BlogPreview";
+import HomeTools         from "@/components/home/HomeTools";
+import NearbySection     from "@/components/home/NearbySection";
 import CTABanner         from "@/components/home/CTABanner";
-import { getRooms, getPosts, getSiteSettings, getReviews, getActivePromoCodes } from "@/lib/sanity-data";
+import { getRooms, getSiteSettings, getReviews, getActivePromoCodes } from "@/lib/sanity-data";
 import { getGoogleReviews, writeReviewUrl, GOOGLE_PLACE_ID } from "@/lib/google-reviews";
 import type { Review } from "@/components/home/TestimonialsSection";
 
@@ -16,8 +17,8 @@ import type { Review } from "@/components/home/TestimonialsSection";
 const CTA_PROMO_CODE = "JOYSTAY10";
 
 export default async function HomePage() {
-  const [rooms, posts, settings, reviews, promos, google] = await Promise.all([
-    getRooms(), getPosts(), getSiteSettings(), getReviews(), getActivePromoCodes(), getGoogleReviews(),
+  const [rooms, settings, reviews, promos, google] = await Promise.all([
+    getRooms(), getSiteSettings(), getReviews(), getActivePromoCodes(), getGoogleReviews(),
   ]);
 
   // Đánh giá Google (tự động, cần GOOGLE_PLACES_API_KEY) + đánh giá nhập tay trong Sanity (Airbnb/Booking/Direct)
@@ -40,15 +41,19 @@ export default async function HomePage() {
     (p) => p.code?.toUpperCase() === CTA_PROMO_CODE
   )?.code ?? null;
 
+  // Ảnh cho khối "Về Joystay": ưu tiên phòng 302 (Parisian), không có thì lấy phòng đầu tiên có ảnh
+  const aboutImage = (rooms.find((r) => r.roomNumber === "302" && r.featuredImage) ?? rooms.find((r) => r.featuredImage))?.featuredImage ?? null;
+
   return (
     <>
       <Navbar />
       <main>
         <HeroSection heroBackground={settings?.heroBackground ?? null} />
-        <AboutSection />
+        <AboutSection image={aboutImage} />
         <RoomScrollStory rooms={rooms} />
+        <HomeTools />
         <TestimonialsSection reviews={allReviews} google={googleSummary} />
-        <BlogPreview posts={posts} />
+        <NearbySection />
         <CTABanner promoCode={ctaPromo} />
       </main>
       <Footer />

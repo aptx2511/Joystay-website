@@ -1,7 +1,8 @@
 "use client";
 
-import { Star } from "lucide-react";
-import SectionHeading from "@/components/ui/SectionHeading";
+import { useState } from "react";
+import { Star, ArrowLeft, ArrowRight } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 
@@ -19,134 +20,82 @@ export interface Review {
   stayDate?: string;
 }
 
-const SOURCE_BADGE: Record<string, { label: string; bg: string; dot: string }> = {
-  Airbnb:  { label: "Airbnb",  bg: "bg-rose-50 border-rose-100 text-rose-500",   dot: "bg-rose-500"   },
-  Google:  { label: "Google",  bg: "bg-blue-50 border-blue-100 text-blue-500",   dot: "bg-blue-500"   },
-  Direct:  { label: "Direct",  bg: "bg-joy-warm border-joy-border text-joy-muted", dot: "bg-joy-green" },
-};
-
 export interface GoogleSummary { rating: number; total: number; mapsUrl: string; writeUrl: string }
 
 export default function TestimonialsSection({ reviews, google }: { reviews: Review[]; google?: GoogleSummary | null }) {
   const { lang } = useLang();
+  const [idx, setIdx] = useState(0);
+  const [fading, setFading] = useState(false);
 
-  const totalReviews = reviews.length;
+  const total = reviews.length;
   // Ưu tiên điểm tổng của Google (tính trên toàn bộ đánh giá), nếu không có thì tính trung bình các đánh giá đang hiển thị
   const avgRating = google && google.total > 0
     ? google.rating.toFixed(1)
-    : totalReviews ? (reviews.reduce((s, r) => s + r.rating, 0) / totalReviews).toFixed(1) : "5.0";
+    : total ? (reviews.reduce((s, r) => s + r.rating, 0) / total).toFixed(1) : "5.0";
   const countLabel = google && google.total > 0
     ? `${google.total} ${tx(T.testimonials.reviews, lang)} ${tx(T.testimonials.google, lang)}`
-    : `${totalReviews} ${tx(T.testimonials.reviews, lang)}`;
+    : `${total} ${tx(T.testimonials.reviews, lang)}`;
+
+  const go = (d: number) => {
+    if (total < 2) return;
+    setFading(true);
+    window.setTimeout(() => { setIdx((i) => (i + d + total) % total); setFading(false); }, 260);
+  };
+  const r = reviews[Math.min(idx, Math.max(0, total - 1))];
+  const text = r ? (lang === "vi" && r.textVi ? r.textVi : r.text) : "";
 
   return (
-    <section className="bg-joy-cream py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+    <section className="bg-joy-cream py-20 sm:py-28">
+      <Reveal className="max-w-4xl mx-auto px-5 sm:px-8">
+        <span className="section-tag">{tx(T.testimonials.tag, lang)}</span>
+        {total > 0 && (
+          <p className="mt-3 flex items-center gap-1.5 font-sans text-sm text-joy-muted">
+            <Star size={15} className="text-joy-green fill-joy-green" />
+            <b className="text-joy-ink">{avgRating}</b> · {countLabel}
+          </p>
+        )}
 
-        <div className="text-center mb-14">
-          <SectionHeading
-            tag={tx(T.testimonials.tag, lang)}
-            title={tx(T.testimonials.title, lang)}
-            titleItalic={tx(T.testimonials.italic, lang)}
-            center
-          />
-          {totalReviews > 0 && <div className="flex items-center justify-center gap-1 mt-6">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} size={16} className="text-joy-green fill-joy-green" />
-            ))}
-            <span className="ml-2 font-sans text-sm text-joy-muted">
-              {avgRating} · {countLabel}
-            </span>
-          </div>}
-        </div>
-
-        {reviews.length === 0 ? (
-          <p className="text-center text-joy-muted font-sans text-sm">
+        {!r ? (
+          <p className="mt-8 text-joy-muted font-sans">
             {lang === "vi" ? "Bạn đã ở Joystay? Chia sẻ cảm nhận của bạn trên Google nhé." : "Stayed with us? Share your experience on Google."}
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {reviews.map((r) => {
-              const badge = SOURCE_BADGE[r.source ?? "Airbnb"] ?? SOURCE_BADGE.Airbnb;
-              const displayText = lang === "vi" && r.textVi ? r.textVi : r.text;
-              return (
-                <article key={r._id}
-                  className="bg-white border border-joy-border rounded-2xl p-7 flex flex-col hover:shadow-md hover:-translate-y-0.5 transition-all duration-400 ease-joy">
-
-                  {/* Stars */}
-                  <div className="flex gap-0.5 mb-4">
-                    {Array.from({ length: r.rating }).map((_, i) => (
-                      <Star key={i} size={13} className="text-joy-green fill-joy-green" />
-                    ))}
-                  </div>
-
-                  {/* Quote mark */}
-                  <span className="font-serif text-5xl text-joy-green/20 leading-none -mt-2 mb-2 select-none">&ldquo;</span>
-
-                  {/* Review text */}
-                  <p className="font-sans text-sm text-joy-ink/80 leading-relaxed flex-1">
-                    {displayText}
-                  </p>
-
-                  {/* Footer */}
-                  <div className="mt-6 pt-5 border-t border-joy-border">
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <p className="font-sans font-semibold text-sm text-joy-ink">
-                          {r.flag} {r.guestName}
-                        </p>
-                        <p className="font-sans text-xs text-joy-muted mt-0.5">
-                          {[r.country, r.stayDate].filter(Boolean).join(" · ")}
-                        </p>
-                      </div>
-                      {r.stayType && (
-                        <span className="font-sans text-[10px] text-joy-muted tracking-wide bg-joy-warm px-3 py-1 rounded-full border border-joy-border">
-                          {r.stayType}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center justify-between mt-3">
-                      {r.roomName && (
-                        <span className="font-sans text-[10px] text-joy-muted italic">
-                          {r.roomName}
-                        </span>
-                      )}
-                      <span className={`ml-auto inline-flex items-center gap-1.5 font-sans text-[10px] font-medium px-3 py-1 rounded-full border ${badge.bg}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`} />
-                        {badge.label}
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+          <>
+            <blockquote aria-live="polite"
+              className={`mt-7 mb-7 border-l-[3px] border-joy-green pl-5 sm:pl-8 font-serif text-[clamp(1.5rem,3.6vw,2.6rem)] leading-[1.22] text-joy-ink text-balance
+                          min-h-[4.5em] transition-all duration-300 ${fading ? "opacity-0 translate-y-2" : "opacity-100"}`}>
+              &ldquo;{text}&rdquo;
+            </blockquote>
+            <div className="flex flex-wrap items-center justify-between gap-4 border-t border-joy-border pt-5">
+              <p className="font-sans text-sm text-joy-muted">
+                <b className="text-joy-ink">{r.flag} {r.guestName}</b>
+                {[r.source ?? "Airbnb", r.roomName, r.stayDate].filter(Boolean).map((x) => ` · ${x}`).join("")}
+                {total > 1 && <span className="tabular-nums"> · {idx + 1}/{total}</span>}
+              </p>
+              {total > 1 && (
+                <div className="flex gap-2">
+                  {[-1, 1].map((d) => (
+                    <button key={d} type="button" onClick={() => go(d)} aria-label={d < 0 ? "Previous review" : "Next review"}
+                      className="w-11 h-11 rounded-full border border-joy-green-dark text-joy-green-dark grid place-items-center
+                                 hover:bg-joy-green-dark hover:text-white active:scale-95 transition-all duration-200">
+                      {d < 0 ? <ArrowLeft size={17} /> : <ArrowRight size={17} />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </>
         )}
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          {totalReviews > 0 && (
-            google?.mapsUrl ? (
-              <a href={google.mapsUrl} target="_blank" rel="noreferrer"
-                className="inline-flex items-center gap-2 font-sans text-xs text-joy-muted bg-white border border-joy-border px-5 py-2.5 rounded-full hover:border-joy-green">
-                <span className="w-2 h-2 rounded-full bg-joy-green" />
-                {tx(T.testimonials.verified, lang)}
-              </a>
-            ) : (
-              <span className="inline-flex items-center gap-2 font-sans text-xs text-joy-muted bg-white border border-joy-border px-5 py-2.5 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-joy-green" />
-                {tx(T.testimonials.verified, lang)}
-              </span>
-            )
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          {total > 0 && google?.mapsUrl && (
+            <a href={google.mapsUrl} target="_blank" rel="noreferrer" className="link-line">{tx(T.testimonials.verified, lang)}</a>
           )}
           {google?.writeUrl && (
-            <a href={google.writeUrl} target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-2 font-sans text-xs font-semibold text-joy-green bg-white border border-joy-border px-5 py-2.5 rounded-full hover:border-joy-green">
-              ★ {tx(T.testimonials.writeReview, lang)}
-            </a>
+            <a href={google.writeUrl} target="_blank" rel="noreferrer" className="link-line">★ {tx(T.testimonials.writeReview, lang)}</a>
           )}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

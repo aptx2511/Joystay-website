@@ -255,7 +255,7 @@ export const USPS = [
   {
     icon: "Palette",
     title: "Curated Art Concepts",
-    titleVi: "5 Concept Nghệ Thuật",
+    titleVi: "6 Concept Nghệ Thuật",
     description: "Every room is a distinct visual world — from Indochine colonial to Pop Art boldness. Stay differently each time.",
     descriptionVi: "Mỗi phòng là một thế giới hình ảnh độc đáo — từ phong cách Đông Dương đến Pop Art táo bạo. Mỗi lần nghỉ là một trải nghiệm khác.",
   },

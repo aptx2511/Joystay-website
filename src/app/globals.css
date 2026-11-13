@@ -24,33 +24,38 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-7 py-3.5 bg-joy-green text-white
-           font-sans font-medium text-sm tracking-wide rounded-full
-           hover:bg-joy-charcoal transition-colors duration-300 ease-joy;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-joy-green-dark text-white
+           font-sans font-semibold text-sm tracking-wide rounded-full
+           hover:bg-[#3F6A3B] active:scale-[0.97] transition-all duration-200 ease-joy;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center gap-2 px-7 py-3.5 border border-current
-           font-sans font-medium text-sm tracking-wide rounded-full
-           hover:bg-joy-ink hover:text-white hover:border-joy-ink
-           transition-all duration-300 ease-joy;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-current
+           font-sans font-semibold text-sm tracking-wide rounded-full
+           hover:bg-joy-ink hover:text-white hover:border-joy-ink active:scale-[0.97]
+           transition-all duration-200 ease-joy;
   }
 
   .btn-ghost-light {
-    @apply inline-flex items-center gap-2 px-7 py-3.5 border border-white/40 text-white
-           font-sans font-medium text-sm tracking-wide rounded-full
-           hover:bg-white hover:text-joy-ink
-           transition-all duration-300 ease-joy;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-white/50 text-white
+           font-sans font-semibold text-sm tracking-wide rounded-full
+           hover:bg-white hover:text-joy-ink active:scale-[0.97]
+           transition-all duration-200 ease-joy;
+  }
+
+  .link-line {
+    @apply inline-block font-sans font-semibold text-sm border-b border-joy-green pb-0.5
+           hover:text-joy-green-dark transition-colors duration-200;
   }
 
   /* ── Section tag: "──── LABEL" ── */
   .section-tag {
     @apply inline-flex items-center gap-2 text-xs font-sans font-semibold
-           tracking-[0.2em] uppercase text-joy-green;
+           tracking-[0.2em] uppercase text-joy-green-dark;
   }
   .section-tag::before {
     content: "";
-    @apply block w-8 h-px bg-joy-green;
+    @apply block w-7 h-0.5 bg-joy-green;
   }
 
   .card-hover {
@@ -64,4 +69,16 @@
   .animate-delay-200 { animation-delay: 200ms; }
   .animate-delay-300 { animation-delay: 300ms; }
   .animate-delay-400 { animation-delay: 400ms; }
+}
+
+/* ── Gallery redesign: reveal-on-scroll + shared-image page transition ── */
+.reveal { opacity: 0; transform: translateY(22px); }
+.reveal-anim { transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.reveal.is-in { opacity: 1; transform: none; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+::view-transition-group(room-hero) { animation-duration: .5s; animation-timing-function: cubic-bezier(.2,.7,.2,1); }
+::view-transition-old(room-hero), ::view-transition-new(room-hero) { height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; }
 }

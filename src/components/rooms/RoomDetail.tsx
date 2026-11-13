@@ -71,7 +71,8 @@ export default function RoomDetail({ room }: { room: Room }) {
     <>
       {/* ── Hero ──────────────────────────────────────────────────── */}
       <section className={`relative min-h-[55vh] sm:min-h-[65vh] flex items-end overflow-hidden
-                           ${!room.featuredImage ? `bg-gradient-to-br ${room.gradient}` : ""}`}>
+                           ${!room.featuredImage ? `bg-gradient-to-br ${room.gradient}` : ""}`}
+               style={{ viewTransitionName: "room-hero" }}>
         {room.featuredImage ? (
           <Image
             src={room.featuredImage}

@@ -10,11 +10,13 @@ const config: Config = {
     extend: {
       colors: {
         joy: {
-          cream:        "#F4F8F4",   // pastel green-tinted white
+          cream:        "#FBFAF6",   // ivory gallery white (Gallery redesign 11/2026)
           warm:         "#E8F2E8",   // soft sage background
           green:        "#6B9467",   // main sage green accent
           "green-light":"#A8C8A4",   // lighter sage
-          charcoal:     "#141412",
+          charcoal:     "#1E3223",   // deep green band (was near-black)
+          "green-dark": "#4E7849",   // buttons / small text on light
+          deep:         "#16261A",   // footer-dark green
           ink:          "#1A1E1A",   // slightly green-tinted near-black
           muted:        "#6A7A68",   // green-tinted muted text
           border:       "#C8DCC6",   // sage green border

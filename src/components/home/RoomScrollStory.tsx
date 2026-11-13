@@ -8,7 +8,7 @@
  * - Thứ tự: 401 → 302 → 301 → 202 → 201 → 101 (từ tầng trên xuống).
  * - prefers-reduced-motion: tắt ghim, các phòng xếp dọc bình thường.
  */
-import Link from "next/link";
+import TransitionLink from "@/components/ui/TransitionLink";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Room } from "@/lib/mock-data";
 import { useLang } from "@/lib/lang-context";
@@ -84,7 +84,7 @@ function RoomText({ room, on, lang }: { room: Room; on: boolean; lang: "en" | "v
         {room.bedType && <li><span>{lang === "vi" ? "Giường" : "Bed"}</span><b>{bedLabel(room.bedType, lang)}</b></li>}
       </ul>
       <div className={s.cta}>
-        <Link href={`/rooms/${room.slug}`} className={s.btn} tabIndex={on ? 0 : -1}>{lang === "vi" ? "Xem phòng" : "View room"}</Link>
+        <TransitionLink href={`/rooms/${room.slug}`} className={s.btn} tabIndex={on ? 0 : -1}>{lang === "vi" ? "Xem phòng" : "View room"}</TransitionLink>
         {room.pricePerNight > 0 && (
           <span className={s.price}>{lang === "vi" ? "Từ" : "From"} <b>{vnd(room.pricePerNight)}</b> / {lang === "vi" ? "đêm" : "night"}</span>
         )}
@@ -143,7 +143,7 @@ export default function RoomScrollStory({ rooms }: { rooms: Room[] }) {
 
   const intro = (
     <div className={s.intro}>
-      <span className="section-tag text-joy-green mb-4 block">
+      <span className="section-tag mb-4 block">
         {lang === "vi" ? "Phòng của chúng tôi" : "Our Rooms"} · 382/23 Nguyễn Thị Minh Khai, Q3
       </span>
       <h2 className="font-serif text-display-lg font-light text-joy-ink leading-tight">
@@ -197,7 +197,7 @@ export default function RoomScrollStory({ rooms }: { rooms: Room[] }) {
             <div className={s.texts}>
               {list.map((r, i) => <RoomText key={r.id} room={r} on={i === active} lang={lang} />)}
             </div>
-            <div className={s.photos}>
+            <div className={s.photos} data-vt-frame>
               {list.map((r, i) => <PhotoStrip key={r.id} room={r} active={i === active} eager={i < 2} />)}
               <span className={s.count}>{pad(active + 1)} / {pad(list.length)}</span>
             </div>

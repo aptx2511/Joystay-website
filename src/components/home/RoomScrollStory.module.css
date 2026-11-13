@@ -1,7 +1,7 @@
 /* Khối "6 phòng" trang chủ (bản chốt 09/11/2026):
    cuộn DỌC đổi phòng (khung ghim) · vuốt NGANG ảnh trong phòng · số phòng sát mép phải
    nền: (B) ảnh phòng làm mờ + (A) số phòng khổng lồ nét viền · ảnh có khung tranh trắng */
-.section { background: #F4F8F4; }
+.section { background: #FBFAF6; }
 .intro { max-width: 80rem; margin: 0 auto; padding: 5rem 1.25rem 2.5rem; }
 .story { position: relative; }
 .pin {
@@ -43,9 +43,9 @@
 .price b { font-size: 1.1rem; color: var(--ri); font-variant-numeric: tabular-nums; }
 
 /* Ảnh — khung tranh trắng + dải vuốt ngang */
-.photos { position: relative; aspect-ratio: 3 / 2; max-width: 100%; border-radius: 4px; overflow: hidden; background: #FBFAF7;
+.photos { position: relative; aspect-ratio: 3 / 2; max-width: 100%; border-radius: 18px; overflow: hidden; background: #FBFAF7;
   box-shadow: 0 2px 0 rgba(0,0,0,.04), 0 40px 70px -28px rgba(0,0,0,.45); }
-.strip { position: absolute; inset: 10px; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
+.strip { position: absolute; inset: 10px; border-radius: 10px; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
   opacity: 0; visibility: hidden; transform: scale(1.04); transition: opacity .6s ease, transform 1.2s cubic-bezier(.2,.7,.2,1), visibility 0s linear .6s; }
 .strip::-webkit-scrollbar { display: none; }
 .strip.on { opacity: 1; visibility: visible; transform: none; transition: opacity .6s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); }
