@@ -8,7 +8,7 @@ type L = { en: string; vi: string };
 export const GUIDE_CONFIG = {
   checkInTime: "15:00" as string | null,
   checkOutTime: "12:00" as string | null,
-  whatsapp: "https://wa.me/84854777730", // hotline/WhatsApp 0854 777 730 (chủ xác nhận 02/11/2026)
+  whatsapp: "https://wa.me/84898888457", // hotline/WhatsApp 0898 888 457 (đổi 14/11/2026)
   // Toạ độ gốc để vẽ chỉ đường (Joystay)
   origin: "382/23 Nguyễn Thị Minh Khai, Bàn Cờ, Hồ Chí Minh",
 };
