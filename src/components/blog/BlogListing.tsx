@@ -50,7 +50,7 @@ export default function BlogListing({ posts }: { posts: BlogPost[] }) {
           {posts.map((post) => (
             <article key={post.id}
               className="group bg-white border border-joy-border rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-joy flex flex-col">
-              <div className={`relative h-48 bg-gradient-to-br ${post.gradient} overflow-hidden`}>
+              <div className={`relative h-48 bg-joy-charcoal bg-gradient-to-br ${post.gradient ?? ""} overflow-hidden`}>
                 {post.featuredImage && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={post.featuredImage.includes("cdn.sanity.io") ? `${post.featuredImage}?w=800&auto=format&q=70` : post.featuredImage}

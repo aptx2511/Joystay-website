@@ -18,7 +18,7 @@ export default function BlogPostContent({ post }: { post: BlogPost }) {
   return (
     <>
       {/* Hero */}
-      <section className={`relative bg-gradient-to-br ${post.gradient ?? "from-joy-charcoal to-joy-ink"} pt-28 sm:pt-32 pb-32 sm:pb-36 px-5 sm:px-8 overflow-hidden rounded-b-[2rem] sm:rounded-b-[3rem]`}>
+      <section className={`relative bg-joy-charcoal bg-gradient-to-br ${post.gradient ?? "from-joy-charcoal to-joy-ink"} pt-28 sm:pt-32 pb-32 sm:pb-36 px-5 sm:px-8 overflow-hidden rounded-b-[2rem] sm:rounded-b-[3rem]`}>
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative max-w-3xl mx-auto">
           <Link href="/blog" className="inline-flex items-center gap-2 text-white/60 hover:text-white font-sans text-sm mb-8 transition-colors">
