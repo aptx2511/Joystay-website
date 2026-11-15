@@ -14,6 +14,9 @@ export const BUSINESS = {
   district: "Quận 3",
   city: "Hồ Chí Minh",
   country: "VN",
+  // Toạ độ theo ghim của Joystay trên Google Maps
+  lat: 10.7725177,
+  lng: 106.6870371,
   mapsUrl: `https://www.google.com/maps/place/?q=place_id:${GOOGLE_PLACE_ID}`,
 };
 
@@ -60,6 +63,7 @@ export function lodgingJsonLd(rooms: Room[], sameAs: string[] = []) {
       addressRegion: BUSINESS.city,
       addressCountry: BUSINESS.country,
     },
+    geo: { "@type": "GeoCoordinates", latitude: BUSINESS.lat, longitude: BUSINESS.lng },
     hasMap: BUSINESS.mapsUrl,
     ...(GUIDE_CONFIG.checkInTime ? { checkinTime: GUIDE_CONFIG.checkInTime } : {}),
     ...(GUIDE_CONFIG.checkOutTime ? { checkoutTime: GUIDE_CONFIG.checkOutTime } : {}),
