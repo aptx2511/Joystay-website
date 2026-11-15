@@ -61,6 +61,9 @@ const PMS_URL = process.env.NEXT_PUBLIC_PMS_URL || "https://joystay-pms.vercel.a
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
+const BANK_LABELS: Record<string, string> = { MB: "MB Bank", VCB: "Vietcombank", TCB: "Techcombank", ICB: "VietinBank", BIDV: "BIDV", ACB: "ACB", TPB: "TPBank", VPB: "VPBank" };
+const bankLabel = (id: string) => BANK_LABELS[id.toUpperCase()] ?? id;
+
 export default function CheckoutFlow({ room, settings, initialCheckIn, initialCheckOut, initialGuests }: Props) {
   const { lang } = useLang();
 
@@ -96,6 +99,11 @@ export default function CheckoutFlow({ room, settings, initialCheckIn, initialCh
   const [bookingLoading, setBookingLoading] = useState(false);
   const [bookingError, setBookingError]     = useState("");
   const [confirmedRef, setConfirmedRef]     = useState("");
+  // QR riêng của đơn do PMS tạo (TK MB công ty + số tiền + nội dung mã JOY) — SePay tự xác nhận khi tiền về
+  const [pay, setPay] = useState<{
+    note: string; due: number; qrUrl: string; payUrl?: string | null; holdMinutes?: number;
+    bank: { bankId: string; accountNo: string; accountName: string };
+  } | null>(null);
   const [copied, setCopied]                 = useState<string | null>(null);
 
   // ── Pricing ──────────────────────────────────────────────────────────────
@@ -244,6 +252,7 @@ export default function CheckoutFlow({ room, settings, initialCheckIn, initialCh
       const booking = await res.json();
       const ref = booking.confirmationCode || booking.id || "";
       setConfirmedRef(ref);
+      setPay(booking.payment && booking.payment.qrUrl ? booking.payment : null);
       setStep("payment");
       trackPurchase(ref, room.name, total, nights);
       setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 50);
@@ -857,9 +866,9 @@ export default function CheckoutFlow({ room, settings, initialCheckIn, initialCh
                     <div className="flex flex-col sm:flex-row gap-6">
                       {/* QR code */}
                       <div className="flex-shrink-0 flex flex-col items-center gap-2">
-                        {settings?.bankQRImageUrl ? (
+                        {pay || settings?.bankQRImageUrl ? (
                           <img
-                            src={settings.bankQRImageUrl}
+                            src={pay?.qrUrl ?? settings?.bankQRImageUrl}
                             alt="Bank QR Code"
                             className="w-44 h-44 rounded-xl border border-joy-border object-contain"
                           />
@@ -880,11 +889,11 @@ export default function CheckoutFlow({ room, settings, initialCheckIn, initialCh
                       {/* Bank details list */}
                       <div className="flex-1 divide-y divide-joy-border">
                         {[
-                          { key: "bank",    label: tx(T.checkout.paymentBank,    lang), value: settings?.bankName          || "—" },
-                          { key: "acct",    label: tx(T.checkout.paymentAccount, lang), value: settings?.bankAccountNumber  || "—", copy: true },
-                          { key: "name",    label: tx(T.checkout.paymentName,    lang), value: settings?.bankAccountName    || "—" },
-                          { key: "amount",  label: tx(T.checkout.paymentAmount,  lang), value: fmtVND(total), highlight: true },
-                          { key: "note",    label: tx(T.checkout.paymentNote,    lang), value: transferNote, copy: true },
+                          { key: "bank",    label: tx(T.checkout.paymentBank,    lang), value: pay ? bankLabel(pay.bank.bankId) : settings?.bankName || "—" },
+                          { key: "acct",    label: tx(T.checkout.paymentAccount, lang), value: pay?.bank.accountNo ?? (settings?.bankAccountNumber || "—"), copy: true },
+                          { key: "name",    label: tx(T.checkout.paymentName,    lang), value: pay?.bank.accountName || settings?.bankAccountName || "—" },
+                          { key: "amount",  label: tx(T.checkout.paymentAmount,  lang), value: fmtVND(pay?.due ?? total), highlight: true },
+                          { key: "note",    label: tx(T.checkout.paymentNote,    lang), value: pay?.note ?? transferNote, copy: true },
                         ].map(({ key, label, value, highlight, copy }) => (
                           <div key={key} className="flex justify-between items-center py-3 first:pt-0 last:pb-0">
                             <span className="font-sans text-xs text-joy-muted w-1/3 flex-shrink-0">{label}</span>
@@ -910,6 +919,19 @@ export default function CheckoutFlow({ room, settings, initialCheckIn, initialCh
                       </div>
                     </div>
                   </div>
+
+                  {pay && (
+                    <div className="bg-joy-warm border border-joy-border rounded-2xl p-4 font-sans text-sm text-joy-ink leading-relaxed">
+                      {lang === "vi"
+                        ? <>Phòng được giữ <strong>{pay.holdMinutes ?? 60} phút</strong>. Chuyển đúng số tiền và nội dung <strong>{pay.note}</strong> — hệ thống tự xác nhận trong khoảng 1 phút, không cần gửi ảnh chuyển khoản.</>
+                        : <>Your room is held for <strong>{pay.holdMinutes ?? 60} minutes</strong>. Transfer the exact amount with reference <strong>{pay.note}</strong> — your booking is confirmed automatically within about a minute, no receipt needed.</>}
+                      {pay.payUrl && (
+                        <a href={pay.payUrl} target="_blank" rel="noopener noreferrer" className="block mt-2 text-joy-green underline">
+                          {lang === "vi" ? "Mở trang đặt phòng của bạn (QR, hướng dẫn nhận phòng) →" : "Open your stay page (QR, check-in guide) →"}
+                        </a>
+                      )}
+                    </div>
+                  )}
 
                   {/* Zalo CTA */}
                   <a
