@@ -12,6 +12,8 @@ const GTM_ID      = process.env.NEXT_PUBLIC_GTM_ID      ?? "";
 const GA_ID       = process.env.NEXT_PUBLIC_GA_ID       ?? "";
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID ?? "";
 const CLARITY_ID  = process.env.NEXT_PUBLIC_CLARITY_ID  ?? "";
+// Mã xác minh Google Search Console (công khai, không phải bí mật)
+const GSC_VERIFICATION = process.env.NEXT_PUBLIC_GSC_VERIFICATION ?? "";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -37,7 +39,10 @@ export const metadata: Metadata = {
   description:
     "Boutique Homestay & Serviced Apartments in District 3, Ho Chi Minh City. 6 uniquely designed rooms. Self check-in 24/7. Book direct, no platform fees.",
   keywords: ["boutique homestay", "District 3", "Ho Chi Minh City", "Saigon", "serviced apartment", "self checkin"],
+  ...(GSC_VERIFICATION ? { verification: { google: GSC_VERIFICATION } } : {}),
   openGraph: {
+    siteName: "Joystay Vietnam",
+    url: SITE_URL,
     title: "Joystay Vietnam — The Art of Stay",
     description: "6 artistically designed rooms in the heart of District 3, Saigon.",
     locale: "en_US",

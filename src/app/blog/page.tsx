@@ -4,6 +4,7 @@ import BlogListing from "@/components/blog/BlogListing";
 import { getPosts } from "@/lib/sanity-data";
 
 export const metadata = {
+  alternates: { canonical: "/blog" },
   title: "Blog & Saigon Guides",
   description: "Travel tips, neighbourhood guides, and stories from Joystay Vietnam.",
 };

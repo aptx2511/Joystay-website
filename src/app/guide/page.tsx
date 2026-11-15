@@ -7,6 +7,7 @@ import { getGoogleReviews, writeReviewUrl, GOOGLE_PLACE_ID } from "@/lib/google-
 export const revalidate = 21600; // 6 giờ
 
 export const metadata = {
+  alternates: { canonical: "/guide" },
   title: G.meta.title,
   description: G.meta.description,
 };

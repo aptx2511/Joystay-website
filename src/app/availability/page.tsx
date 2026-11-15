@@ -7,6 +7,7 @@ import { getRooms } from "@/lib/sanity-data";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
+  alternates: { canonical: "/availability" },
   title: "Availability",
   description: "See which dates are free at Joystay, District 3 — nightly prices for every room, book direct in one tap.",
 };

@@ -6,6 +6,7 @@ import { getRooms } from "@/lib/sanity-data";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
+  alternates: { canonical: "/rooms" },
   title: "Our Rooms",
   description: "6 artistically designed rooms in the heart of District 3, Saigon. Choose your concept.",
 };

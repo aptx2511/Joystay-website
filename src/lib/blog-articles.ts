@@ -30,6 +30,170 @@ export interface Article {
 export const ARTICLES: Article[] = [
   // ─────────────────────────────────────────────────────────────────────────
   {
+    slug: "homestay-near-notre-dame-cathedral-saigon",
+    title: {
+      vi: "Ở đâu gần Nhà thờ Đức Bà? Gợi ý homestay Quận 3 cách trung tâm vài phút xe",
+      en: "Where to Stay Near Notre-Dame Cathedral Saigon: A District 3 Homestay Minutes Away",
+    },
+    excerpt: {
+      vi: "Muốn ở gần Nhà thờ Đức Bà, Bưu điện Thành phố và Dinh Độc Lập mà không phải trả giá khách sạn Quận 1? Quận 3 là lựa chọn nằm ngay sát bên.",
+      en: "Want to be close to Notre-Dame Cathedral, the Central Post Office and Independence Palace without District 1 hotel prices? District 3 is right next door.",
+    },
+    category: { vi: "Cẩm Nang Sài Gòn", en: "Saigon Guide" },
+    readTime: 4,
+    publishedAt: "2026-11-15",
+    coverRoom: "302",
+    gradient: "from-emerald-800 to-green-600",
+    keywords: ["ở đâu gần Nhà thờ Đức Bà", "homestay gần Nhà thờ Đức Bà", "where to stay near Notre Dame Cathedral Saigon", "homestay near Independence Palace"],
+    body: [
+      { p: {
+        vi: "Nhà thờ Đức Bà, Bưu điện Thành phố, Dinh Độc Lập và Đường sách Nguyễn Văn Bình nằm thành một cụm ở Quận 1, đi bộ qua lại được. Ở ngay cụm này thì tiện, nhưng giá phòng cao. Cách thực tế hơn là ở Quận 3, quận giáp ranh, rồi đi một cuốc xe ngắn.",
+        en: "Notre-Dame Cathedral, the Central Post Office, Independence Palace and Nguyễn Văn Bình Book Street sit in one walkable cluster in District 1. Staying right there is convenient but pricey. A more practical option is District 3, the neighbouring district, a short ride away.",
+      } },
+      { h: { vi: "Từ Joystay tới Nhà thờ Đức Bà mất bao lâu?", en: "How far is Joystay from Notre-Dame Cathedral?" } },
+      { p: {
+        vi: "Joystay ở 382/23 Nguyễn Thị Minh Khai, Quận 3. Đường Nguyễn Thị Minh Khai chạy thẳng về phía trung tâm, nên tới khu Nhà thờ Đức Bà chỉ khoảng 2,5 km, thường mất 10 đến 15 phút đi xe công nghệ tuỳ giờ. Dinh Độc Lập và Bảo tàng Chứng tích Chiến tranh còn gần hơn, nằm ngay trên đường đi.",
+        en: "Joystay is at 382/23 Nguyễn Thị Minh Khai, District 3. Nguyễn Thị Minh Khai street runs straight toward the centre, so the cathedral area is only about 2.5 km away, usually 10 to 15 minutes by ride-hailing car or bike depending on traffic. Independence Palace and the War Remnants Museum are closer still, right along the way.",
+      } },
+      { h: { vi: "Gợi ý một buổi sáng quanh Nhà thờ Đức Bà", en: "A morning around the cathedral" } },
+      { ul: [
+        { vi: "Nhà thờ Đức Bà: công trình gạch đỏ từ cuối thế kỷ 19. Nhà thờ đang được trùng tu dài hạn nên có thể có giàn giáo, bạn vẫn ngắm và chụp ảnh từ bên ngoài được.", en: "Notre-Dame Cathedral: a red-brick landmark from the late 19th century. It is under long-term restoration, so expect scaffolding, but you can still see and photograph it from outside." },
+        { vi: "Bưu điện Thành phố: ngay bên cạnh nhà thờ, vào cửa tự do.", en: "Central Post Office: right beside the cathedral, free to enter." },
+        { vi: "Đường sách Nguyễn Văn Bình: con phố đi bộ nhỏ với các quầy sách và quán cà phê.", en: "Nguyễn Văn Bình Book Street: a small pedestrian lane of bookstalls and cafés." },
+        { vi: "Dinh Độc Lập: cách nhà thờ vài phút đi bộ qua công viên 30/4.", en: "Independence Palace: a few minutes' walk from the cathedral through 30/4 Park." },
+      ] },
+      { p: {
+        vi: "Giờ mở cửa và giá vé thay đổi theo thời điểm, bạn nên xem Google Maps trước khi đi.",
+        en: "Opening hours and ticket prices change, so check Google Maps before you go.",
+      } },
+      { h: { vi: "Vì sao ở Quận 3 thay vì Quận 1?", en: "Why District 3 instead of District 1?" } },
+      { ul: [
+        { vi: "Gần: chỉ một cuốc xe ngắn là tới các điểm tham quan chính.", en: "Close: the main sights are one short ride away." },
+        { vi: "Yên hơn: Joystay nằm trong hẻm, buổi tối yên tĩnh.", en: "Calmer: Joystay is in an alley and evenings are quiet." },
+        { vi: "Nhiều quán của người địa phương: trong hẻm 382 có tiệm bánh, sandwich, pizza và cà phê.", en: "More local spots: alley 382 has a bakery, sandwiches, pizza and coffee." },
+        { vi: "Tự do giờ giấc: tự check-in bằng mã khoá, về muộn sau bữa tối ở trung tâm cũng không phiền ai.", en: "Your own schedule: self check-in by keypad code, so a late return after dinner downtown bothers no one." },
+      ] },
+      { link: { href: "/rooms", label: { vi: "Xem 6 phòng của Joystay", en: "See Joystay's 6 rooms" } } },
+      { link: { href: "/blog/where-to-stay-district-3-saigon", label: { vi: "Đọc thêm: quanh hẻm 382 có gì", en: "Read more: what is around alley 382" } } },
+    ],
+    faq: [
+      { q: { vi: "Joystay cách Nhà thờ Đức Bà bao xa?", en: "How far is Joystay from Notre-Dame Cathedral?" },
+        a: { vi: "Khoảng 2,5 km, thường mất 10 đến 15 phút đi xe tuỳ giờ.", en: "About 2.5 km, usually 10 to 15 minutes by car or bike depending on traffic." } },
+      { q: { vi: "Có đi bộ từ Joystay tới Nhà thờ Đức Bà được không?", en: "Can I walk from Joystay to Notre-Dame Cathedral?" },
+        a: { vi: "Được, nhưng mất khoảng nửa tiếng dưới nắng Sài Gòn. Đa số khách gọi xe công nghệ.", en: "You can, but it takes roughly half an hour in the Saigon heat. Most guests take a ride-hailing car or bike." } },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "homestay-near-tan-son-nhat-airport-layover",
+    title: {
+      vi: "Homestay gần sân bay Tân Sơn Nhất cho khách quá cảnh và bay đêm",
+      en: "A Homestay Near Tân Sơn Nhất Airport for Layovers and Late Flights",
+    },
+    excerpt: {
+      vi: "Hạ cánh nửa đêm hay quá cảnh một đêm ở Sài Gòn? Homestay tự check-in ở Quận 3 cho bạn nhận phòng bất kể giờ nào mà vẫn ở gần trung tâm.",
+      en: "Landing at midnight or spending one night in Saigon between flights? A self check-in homestay in District 3 lets you arrive at any hour and still be near the centre.",
+    },
+    category: { vi: "Cẩm Nang Sài Gòn", en: "Saigon Guide" },
+    readTime: 4,
+    publishedAt: "2026-11-15",
+    coverRoom: "101",
+    gradient: "from-teal-800 to-emerald-600",
+    keywords: ["homestay gần sân bay Tân Sơn Nhất", "chỗ ở quá cảnh Sài Gòn", "hotel near Tan Son Nhat airport late check-in", "Saigon layover where to stay"],
+    body: [
+      { p: {
+        vi: "Sân bay Tân Sơn Nhất nằm trong thành phố, nên bạn không bắt buộc phải ở sát sân bay. Quận 3 nằm giữa sân bay và Quận 1: từ Joystay ra sân bay khoảng 7 km, thường mất 20 đến 30 phút đi xe, giờ cao điểm có thể lâu hơn.",
+        en: "Tân Sơn Nhất Airport is inside the city, so you do not have to stay right beside it. District 3 sits between the airport and District 1: Joystay is about 7 km from the airport, usually 20 to 30 minutes by car and longer at rush hour.",
+      } },
+      { h: { vi: "Bay đêm: nhận phòng lúc nào cũng được", en: "Late flights: check in at any hour" } },
+      { p: {
+        vi: "Điều khó chịu nhất khi hạ cánh khuya là lo lễ tân đã nghỉ. Joystay không có lễ tân: trước giờ nhận phòng bạn nhận mã cổng và mã phòng, tới nơi tự bấm mã là vào. Hạ cánh 1 giờ sáng cũng không cần hẹn trước với ai.",
+        en: "The worst part of a late landing is wondering whether reception has closed. Joystay has no reception: you receive your gate and room codes before check-in time and let yourself in on arrival. Landing at 1 am needs no arrangement with anyone.",
+      } },
+      { link: { href: "/blog/self-check-in-joystay-district-3", label: { vi: "Xem 5 bước tự check-in", en: "See the 5 self check-in steps" } } },
+      { h: { vi: "Bay sớm hoặc tới sớm: gửi hành lý", en: "Early arrival or late departure: store your bags" } },
+      { p: {
+        vi: "Giờ nhận phòng từ 15:00 và trả phòng trước 12:00. Nếu chuyến bay của bạn tới sớm, Joystay có tủ gửi hành lý để bạn cất đồ rồi đi ăn sáng, dạo trung tâm trong lúc chờ. Cần nhận phòng sớm hoặc trả muộn, bạn nhắn Joystay qua Zalo hoặc WhatsApp để được sắp xếp khi lịch phòng cho phép.",
+        en: "Check-in is from 15:00 and check-out by 12:00. If your flight lands early, Joystay has luggage lockers so you can drop your bags and go for breakfast or a walk downtown while you wait. For an early check-in or late check-out, message us on Zalo or WhatsApp and we will arrange it when the room schedule allows.",
+      } },
+      { h: { vi: "Đi từ sân bay về Joystay", en: "Getting from the airport to Joystay" } },
+      { ul: [
+        { vi: "Xe công nghệ hoặc taxi là cách đơn giản nhất. Nhập điểm đến \"382/23 Nguyễn Thị Minh Khai, Quận 3\".", en: "Ride-hailing or a taxi is the simplest way. Enter \"382/23 Nguyễn Thị Minh Khai, District 3\" as your destination." },
+        { vi: "Hẻm 382 xe hơi vào được, nên xe đưa bạn tới tận cửa kể cả khi có vali lớn.", en: "Alley 382 is car-accessible, so you are dropped at the door even with large suitcases." },
+        { vi: "Tìm số nhà 382/23: tầng trệt là cửa hàng PORO Trading Card Game, đó chính là lối vào.", en: "Look for number 382/23: the ground floor is the PORO Trading Card Game shop, and that is the entrance." },
+      ] },
+      { h: { vi: "Chọn phòng nào cho một đêm quá cảnh?", en: "Which room for a one-night layover?" } },
+      { p: {
+        vi: "Nếu mục tiêu là ngủ bù, hai phòng không cửa sổ 101 và 201 tối hoàn toàn, ngủ ban ngày cũng dễ. Phòng 101 ở lầu thấp nhất nên ít phải xách vali lên cầu thang nhất. Đi nhóm 3 đến 4 người thì chọn phòng 401.",
+        en: "If the goal is catching up on sleep, the two windowless rooms, 101 and 201, are fully dark and easy to sleep in even by day. Room 101 is on the lowest guest floor, so it means the fewest stairs with a suitcase. Groups of 3 to 4 should pick room 401.",
+      } },
+      { link: { href: "/blog/windowless-room-for-deep-sleep", label: { vi: "Vì sao phòng không cửa sổ ngủ ngon hơn", en: "Why a windowless room helps you sleep" } } },
+      { link: { href: "/availability", label: { vi: "Xem phòng trống đêm bạn tới", en: "Check which rooms are free on your night" } } },
+    ],
+    faq: [
+      { q: { vi: "Joystay cách sân bay Tân Sơn Nhất bao xa?", en: "How far is Joystay from Tân Sơn Nhất Airport?" },
+        a: { vi: "Khoảng 7 km, thường mất 20 đến 30 phút đi xe, giờ cao điểm lâu hơn.", en: "About 7 km, usually 20 to 30 minutes by car and longer at rush hour." } },
+      { q: { vi: "Tôi hạ cánh sau nửa đêm, có nhận phòng được không?", en: "I land after midnight. Can I still check in?" },
+        a: { vi: "Được. Joystay tự check-in bằng mã khoá 24/7, không cần lễ tân.", en: "Yes. Joystay is self check-in by keypad code, 24/7, with no reception needed." } },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "book-direct-joystay",
+    title: {
+      vi: "Đặt phòng trực tiếp trên joystay.vn: 4 bước, thanh toán bằng mã QR",
+      en: "Booking Direct on joystay.vn: 4 Steps, Pay by QR Code",
+    },
+    excerpt: {
+      vi: "Đặt thẳng với Joystay không qua nền tảng trung gian: chọn phòng, quét QR chuyển khoản, hệ thống tự xác nhận trong khoảng một phút.",
+      en: "Book straight with Joystay, no middleman platform: pick a room, scan a QR code to pay by bank transfer, and get automatic confirmation in about a minute.",
+    },
+    category: { vi: "Hướng Dẫn Khách", en: "Guest Guide" },
+    readTime: 3,
+    publishedAt: "2026-11-15",
+    coverRoom: "401",
+    gradient: "from-green-800 to-emerald-500",
+    keywords: ["đặt phòng trực tiếp Joystay", "đặt homestay Quận 3 không cần thẻ", "book direct Joystay", "Saigon homestay no credit card"],
+    body: [
+      { p: {
+        vi: "Bạn có thể đặt phòng Joystay ngay trên joystay.vn. Đặt trực tiếp nghĩa là không có phí dịch vụ của nền tảng trung gian, và bạn trao đổi thẳng với Joystay khi cần hỗ trợ.",
+        en: "You can book a Joystay room right on joystay.vn. Booking direct means no middleman platform service fee, and you deal with Joystay directly whenever you need help.",
+      } },
+      { h: { vi: "Bốn bước đặt phòng", en: "Four steps to book" } },
+      { ul: [
+        { vi: "Bước 1: Chọn ngày nhận, ngày trả và số khách ở trang chủ hoặc trang lịch trống.", en: "Step 1: Choose your check-in date, check-out date and number of guests on the home page or the availability page." },
+        { vi: "Bước 2: Chọn phòng còn trống. Giá hiển thị theo từng đêm, đêm thứ Sáu và thứ Bảy có thể có giá cuối tuần.", en: "Step 2: Pick an available room. Prices are shown per night; Friday and Saturday nights may carry a weekend rate." },
+        { vi: "Bước 3: Điền tên và số điện thoại. Nếu có mã giảm giá, nhập ở bước này.", en: "Step 3: Enter your name and phone number. If you have a promo code, enter it here." },
+        { vi: "Bước 4: Quét mã QR bằng ứng dụng ngân hàng để chuyển khoản. Mã QR đã điền sẵn số tiền và nội dung chuyển khoản của riêng đơn bạn.", en: "Step 4: Scan the QR code with your banking app to pay by transfer. The code is pre-filled with the amount and the payment reference for your booking." },
+      ] },
+      { h: { vi: "Sau khi chuyển khoản", en: "After you pay" } },
+      { p: {
+        vi: "Phòng được giữ cho bạn 60 phút kể từ lúc tạo đơn. Khi bạn chuyển đúng số tiền và nội dung, hệ thống tự xác nhận trong khoảng một phút, không cần gửi ảnh chụp màn hình. Trước giờ nhận phòng, Joystay gửi mã cổng, mã phòng và WiFi cho bạn.",
+        en: "Your room is held for 60 minutes from the moment the booking is created. Once you transfer the exact amount with the right reference, the booking is confirmed automatically in about a minute, no screenshot needed. Before check-in, Joystay sends your gate code, room code and WiFi details.",
+      } },
+      { h: { vi: "Ba điều Joystay cam kết", en: "Three things we promise" } },
+      { ul: [
+        { vi: "Huỷ miễn phí trước 48 giờ so với giờ nhận phòng.", en: "Free cancellation up to 48 hours before check-in." },
+        { vi: "Không cần thẻ tín dụng.", en: "No credit card required." },
+        { vi: "Xác nhận ngay sau khi thanh toán.", en: "Confirmation as soon as you pay." },
+      ] },
+      { link: { href: "/availability", label: { vi: "Xem lịch trống và đặt phòng", en: "See availability and book" } } },
+      { link: { href: "/blog/which-joystay-room-to-choose", label: { vi: "Chưa biết chọn phòng nào? So sánh 6 phòng", en: "Not sure which room? Compare all 6" } } },
+    ],
+    faq: [
+      { q: { vi: "Đặt phòng Joystay có cần thẻ tín dụng không?", en: "Do I need a credit card to book Joystay?" },
+        a: { vi: "Không. Bạn thanh toán bằng chuyển khoản ngân hàng qua mã QR.", en: "No. You pay by bank transfer using a QR code." } },
+      { q: { vi: "Tôi có huỷ phòng được không?", en: "Can I cancel my booking?" },
+        a: { vi: "Được, huỷ miễn phí trước 48 giờ so với giờ nhận phòng.", en: "Yes, cancellation is free up to 48 hours before check-in." } },
+      { q: { vi: "Bao lâu thì đơn được xác nhận?", en: "How long does confirmation take?" },
+        a: { vi: "Khoảng một phút sau khi bạn chuyển khoản đúng số tiền và nội dung.", en: "About a minute after you transfer the exact amount with the right reference." } },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  {
     slug: "self-check-in-joystay-district-3",
     title: {
       vi: "Hướng dẫn tự check-in tại Joystay Quận 3: 5 bước, không cần lễ tân",

@@ -13,6 +13,9 @@ import CTABanner         from "@/components/home/CTABanner";
 import { getRooms, getSiteSettings, getReviews, getActivePromoCodes } from "@/lib/sanity-data";
 import { getGoogleReviews, writeReviewUrl, GOOGLE_PLACE_ID } from "@/lib/google-reviews";
 import type { Review } from "@/components/home/TestimonialsSection";
+import { lodgingJsonLd } from "@/lib/structured-data";
+
+export const metadata = { alternates: { canonical: "/" } };
 
 // Mã giảm giá quảng cáo trên banner CTA — chỉ hiện khi mã này đang active trong Sanity
 const CTA_PROMO_CODE = "JOYSTAY10";
@@ -48,8 +51,13 @@ export default async function HomePage() {
   const prices = rooms.filter((r) => r.isAvailable !== false && r.pricePerNight > 0).map((r) => r.pricePerNight);
   const fromPrice = prices.length ? Math.min(...prices) : undefined;
 
+  // Dữ liệu có cấu trúc cho Google / trợ lý AI
+  const st = settings as { instagramUrl?: string; facebookUrl?: string; tiktokUrl?: string } | null;
+  const sameAs = [st?.instagramUrl, st?.facebookUrl, st?.tiktokUrl].filter((u): u is string => !!u);
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: lodgingJsonLd(rooms, sameAs) }} />
       <Navbar />
       <main>
         <HeroSection heroBackground={settings?.heroBackground ?? null} />
