@@ -1,4 +1,5 @@
 import { client, isSanityConfigured } from "@/sanity/lib/client";
+import { ARTICLES } from "@/lib/blog-articles";
 import {
   ALL_ROOMS_QUERY,
   ROOM_BY_SLUG_QUERY,
@@ -8,7 +9,7 @@ import {
   ACTIVE_PROMO_CODES_QUERY,
   REVIEWS_QUERY,
 } from "@/sanity/lib/queries";
-import { ROOMS, BLOG_POSTS } from "./mock-data";
+import { ROOMS } from "./mock-data";
 import { applyFacts, sortRooms } from "./room-facts";
 import type { Room, BlogPost } from "./mock-data";
 
@@ -53,24 +54,47 @@ export async function getRoomSlugs(): Promise<string[]> {
 
 // ── Blog Posts ───────────────────────────────────────────────────────────────
 
+/** Bài viết sẵn trong code → dạng BlogPost; ảnh bìa lấy từ ảnh phòng trong CMS nếu bài khai báo coverRoom */
+async function codePosts(): Promise<BlogPost[]> {
+  let rooms: Room[] = [];
+  try { rooms = await getRooms(); } catch { /* không có ảnh bìa cũng không sao */ }
+  return ARTICLES.map((a) => ({
+    id: `article-${a.slug}`,
+    slug: a.slug,
+    title: a.title.vi,
+    titleEn: a.title.en,
+    excerpt: a.excerpt.vi,
+    excerptEn: a.excerpt.en,
+    category: a.category.vi,
+    categoryEn: a.category.en,
+    readTime: a.readTime,
+    publishedAt: a.publishedAt,
+    gradient: a.gradient,
+    featuredImage: a.coverImage ?? rooms.find((r) => r.roomNumber === a.coverRoom)?.featuredImage ?? null,
+    article: a,
+  }));
+}
+
+/** Bài trong Sanity (nếu có) + bài viết sẵn trong code. Trùng slug → ưu tiên Sanity. Mới nhất lên đầu. */
 export async function getPosts(): Promise<BlogPost[]> {
-  if (!USE_SANITY) return BLOG_POSTS;
-  try {
-    const data = await client.fetch(ALL_POSTS_QUERY, {}, { next: { tags: ["post"], revalidate: 3600 } });
-    return data?.length ? data : BLOG_POSTS;
-  } catch {
-    return BLOG_POSTS;
+  let cms: BlogPost[] = [];
+  if (USE_SANITY) {
+    try {
+      cms = (await client.fetch(ALL_POSTS_QUERY, {}, { next: { tags: ["post"], revalidate: 3600 } })) ?? [];
+    } catch { cms = []; }
   }
+  const code = (await codePosts()).filter((p) => !cms.some((c) => c.slug === p.slug));
+  return [...cms, ...code].sort((a, b) => String(b.publishedAt ?? "").localeCompare(String(a.publishedAt ?? "")));
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  if (!USE_SANITY) return BLOG_POSTS.find((p) => p.slug === slug) ?? null;
-  try {
-    const data = await client.fetch(POST_BY_SLUG_QUERY, { slug }, { next: { tags: ["post"], revalidate: 3600 } });
-    return data ?? BLOG_POSTS.find((p) => p.slug === slug) ?? null;
-  } catch {
-    return BLOG_POSTS.find((p) => p.slug === slug) ?? null;
+  if (USE_SANITY) {
+    try {
+      const data = await client.fetch(POST_BY_SLUG_QUERY, { slug }, { next: { tags: ["post"], revalidate: 3600 } });
+      if (data) return data;
+    } catch { /* rơi xuống bài trong code */ }
   }
+  return (await codePosts()).find((p) => p.slug === slug) ?? null;
 }
 
 export async function getPostSlugs(): Promise<string[]> {

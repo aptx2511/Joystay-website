@@ -67,6 +67,9 @@ export type BlogPost = {
   readTime: number;
   publishedAt: string;
   gradient: string;
+  featuredImage?: string | null;
+  /** Bài viết sẵn trong code (src/lib/blog-articles.ts) — có nội dung đầy đủ */
+  article?: import("./blog-articles").Article;
 };
 
 // ─── Rooms ────────────────────────────────────────────────────────────────────

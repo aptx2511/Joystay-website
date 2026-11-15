@@ -5,6 +5,7 @@ import { LangProvider } from "@/lib/lang-context";
 import JoyBotWidget from "@/components/chat/JoyBotWidget";
 import { SettingsProvider } from "@/lib/settings-context";
 import { getSiteSettings } from "@/lib/sanity-data";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const GTM_ID      = process.env.NEXT_PUBLIC_GTM_ID      ?? "";
@@ -28,6 +29,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Joystay Vietnam — The Art of Stay",
     template: "%s | Joystay Vietnam",

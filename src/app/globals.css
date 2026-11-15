@@ -55,7 +55,8 @@
   }
   .section-tag::before {
     content: "";
-    @apply block w-7 h-0.5 bg-joy-green;
+    /* inline-block + shrink-0: gạch nằm cùng hàng với chữ dù thẻ là inline-flex hay block */
+    @apply inline-block shrink-0 align-middle mr-2 w-7 h-0.5 bg-joy-green;
   }
 
   .card-hover {

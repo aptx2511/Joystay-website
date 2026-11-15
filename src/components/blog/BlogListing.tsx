@@ -51,6 +51,11 @@ export default function BlogListing({ posts }: { posts: BlogPost[] }) {
             <article key={post.id}
               className="group bg-white border border-joy-border rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-joy flex flex-col">
               <div className={`relative h-48 bg-gradient-to-br ${post.gradient} overflow-hidden`}>
+                {post.featuredImage && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={post.featuredImage.includes("cdn.sanity.io") ? `${post.featuredImage}?w=800&auto=format&q=70` : post.featuredImage}
+                    alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-joy" />
+                )}
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
                 <div className="absolute bottom-4 left-4">
                   <span className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-sans text-[10px] font-semibold tracking-[0.15em] uppercase px-3 py-1 rounded-full">

@@ -9,6 +9,7 @@ import {
   Loader2, AlertCircle, CalendarCheck, Upload, ImageIcon,
 } from "lucide-react";
 import type { Room } from "@/lib/mock-data";
+import { nightsBetween, calcSubtotal } from "@/lib/pricing";
 import { useLang, tx } from "@/lib/lang-context";
 import { T } from "@/lib/translations";
 import { trackBeginCheckout, trackPurchase } from "@/lib/analytics";
@@ -44,35 +45,7 @@ function fmtVND(n: number) {
   return new Intl.NumberFormat("vi-VN").format(n) + "đ";
 }
 
-function nightsBetween(a: string, b: string) {
-  if (!a || !b) return 0;
-  const diff = Math.round((new Date(b).getTime() - new Date(a).getTime()) / 86_400_000);
-  return diff > 0 ? diff : 0;
-}
-
-/** Friday=5, Saturday=6 → weekend. Returns {weekdayNights, weekendNights, subtotal} */
-function calcSubtotal(
-  checkIn: string, checkOut: string,
-  pricePerNight: number, weekendPrice?: number
-) {
-  const nights = nightsBetween(checkIn, checkOut);
-  if (nights <= 0) return { weekdayNights: 0, weekendNights: 0, subtotal: 0 };
-  if (!weekendPrice) return { weekdayNights: nights, weekendNights: 0, subtotal: nights * pricePerNight };
-
-  let weekdayNights = 0, weekendNights = 0;
-  const start = new Date(checkIn);
-  for (let i = 0; i < nights; i++) {
-    const d = new Date(start);
-    d.setDate(start.getDate() + i);
-    const dow = d.getDay(); // 0=Sun,5=Fri,6=Sat
-    if (dow === 5 || dow === 6) weekendNights++; else weekdayNights++;
-  }
-  return {
-    weekdayNights,
-    weekendNights,
-    subtotal: weekdayNights * pricePerNight + weekendNights * weekendPrice,
-  };
-}
+// nightsBetween / calcSubtotal: dùng chung với máy chủ → src/lib/pricing.ts
 
 function todayStr() {
   return new Date().toISOString().split("T")[0];
@@ -254,6 +227,7 @@ export default function CheckoutFlow({ room, settings, initialCheckIn, initialCh
           checkIn,
           checkOut,
           totalPrice:  total,
+          promoCode:   appliedPromo?.code,   // máy chủ tự kiểm tra lại mã và tự tính tổng tiền
           source:      "DIRECT",
           notes:       guestNotes || undefined,
           status:      "PENDING",

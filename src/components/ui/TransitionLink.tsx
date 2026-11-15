@@ -22,7 +22,7 @@ export default function TransitionLink({ href, onClick, ...rest }: ComponentProp
       router.push(href);
       const t0 = Date.now();
       const tick = () => {
-        if (window.location.pathname === href || Date.now() - t0 > 1200) requestAnimationFrame(() => resolve());
+        if (window.location.pathname === href || Date.now() - t0 > 700) requestAnimationFrame(() => resolve());
         else requestAnimationFrame(tick);
       };
       tick();

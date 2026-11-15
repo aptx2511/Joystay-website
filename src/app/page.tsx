@@ -8,6 +8,7 @@ import RoomScrollStory   from "@/components/home/RoomScrollStory";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import HomeTools         from "@/components/home/HomeTools";
 import NearbySection     from "@/components/home/NearbySection";
+import MobileBookBar     from "@/components/home/MobileBookBar";
 import CTABanner         from "@/components/home/CTABanner";
 import { getRooms, getSiteSettings, getReviews, getActivePromoCodes } from "@/lib/sanity-data";
 import { getGoogleReviews, writeReviewUrl, GOOGLE_PLACE_ID } from "@/lib/google-reviews";
@@ -44,6 +45,9 @@ export default async function HomePage() {
   // Ảnh cho khối "Về Joystay": ưu tiên phòng 302 (Parisian), không có thì lấy phòng đầu tiên có ảnh
   const aboutImage = (rooms.find((r) => r.roomNumber === "302" && r.featuredImage) ?? rooms.find((r) => r.featuredImage))?.featuredImage ?? null;
 
+  const prices = rooms.filter((r) => r.isAvailable !== false && r.pricePerNight > 0).map((r) => r.pricePerNight);
+  const fromPrice = prices.length ? Math.min(...prices) : undefined;
+
   return (
     <>
       <Navbar />
@@ -56,6 +60,7 @@ export default async function HomePage() {
         <NearbySection />
         <CTABanner promoCode={ctaPromo} />
       </main>
+      <MobileBookBar fromPrice={fromPrice} />
       <Footer />
     </>
   );

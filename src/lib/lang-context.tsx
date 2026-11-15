@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, ReactNode } from "react";
 
 export type Lang = "en" | "vi";
 
@@ -14,8 +14,30 @@ const LangContext = createContext<LangContextType>({
   setLang: () => {},
 });
 
+const KEY = "joystay-lang";
+
+/** Ngôn ngữ: lần đầu theo ngôn ngữ trình duyệt (tiếng Việt → VI, còn lại → EN);
+ *  khi khách tự chọn thì ghi nhớ cho những lần sau (localStorage). */
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>("en");
+
+  useEffect(() => {
+    let next: Lang | null = null;
+    try {
+      const saved = window.localStorage.getItem(KEY);
+      if (saved === "en" || saved === "vi") next = saved;
+    } catch { /* chế độ riêng tư: bỏ qua */ }
+    if (!next && navigator.language?.toLowerCase().startsWith("vi")) next = "vi";
+    if (next && next !== "en") setLangState(next);
+  }, []);
+
+  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+
+  const setLang = useCallback((l: Lang) => {
+    setLangState(l);
+    try { window.localStorage.setItem(KEY, l); } catch { /* bỏ qua */ }
+  }, []);
+
   return (
     <LangContext.Provider value={{ lang, setLang }}>
       {children}
