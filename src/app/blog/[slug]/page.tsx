@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) return {};
-  const title = post.titleEn || post.title;
-  const description = post.excerptEn || post.excerpt;
+  const title = post.seoTitle || post.titleEn || post.title;
+  const description = post.seoDescription || post.excerptEn || post.excerpt;
   return {
     title,
     description,

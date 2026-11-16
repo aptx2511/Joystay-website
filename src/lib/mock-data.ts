@@ -70,6 +70,12 @@ export type BlogPost = {
   featuredImage?: string | null;
   /** Bài viết sẵn trong code (src/lib/blog-articles.ts) — có nội dung đầy đủ */
   article?: import("./blog-articles").Article;
+  /** Bài soạn trong Sanity: nội dung dạng Portable Text (chữ + ảnh) */
+  body?: unknown[] | null;
+  bodyEn?: unknown[] | null;
+  imageAlt?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
 };
 
 // ─── Rooms ────────────────────────────────────────────────────────────────────

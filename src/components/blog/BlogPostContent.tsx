@@ -3,8 +3,75 @@
 import { Clock, ArrowLeft, Calendar } from "lucide-react";
 import { format } from "date-fns";
 import Link from "next/link";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { useLang } from "@/lib/lang-context";
 import type { BlogPost } from "@/lib/mock-data";
+
+const sizedImg = (url: string, w: number) => (url.includes("cdn.sanity.io") ? `${url}?w=${w}&auto=format&q=75` : url);
+
+/** Cách hiển thị nội dung soạn trong Sanity (chữ, tiêu đề, trích dẫn, danh sách, link, ảnh) — cùng kiểu với bài viết sẵn trong code */
+const ptComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p className="mb-5 text-joy-ink/85">{children}</p>,
+    h2: ({ children }) => <h2 className="font-serif text-3xl sm:text-[2.1rem] font-medium leading-tight text-joy-ink mt-10 mb-3">{children}</h2>,
+    h3: ({ children }) => <h3 className="font-serif text-2xl font-medium leading-tight text-joy-ink mt-8 mb-2">{children}</h3>,
+    blockquote: ({ children }) => <blockquote className="my-7 pl-5 border-l-2 border-joy-green font-serif text-2xl leading-snug text-joy-ink">{children}</blockquote>,
+  },
+  list: {
+    bullet: ({ children }) => <ul className="mb-6 border-t border-joy-border">{children}</ul>,
+    number: ({ children }) => <ol className="mb-6 pl-6 list-decimal space-y-2 text-joy-ink/85">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => (
+      <li className="relative pl-7 py-3 border-b border-joy-border text-joy-ink/85">
+        <span className="absolute left-1 top-[1.35rem] w-2 h-2 rounded-full bg-joy-green" />{children}
+      </li>
+    ),
+    number: ({ children }) => <li>{children}</li>,
+  },
+  marks: {
+    strong: ({ children }) => <strong className="font-semibold text-joy-ink">{children}</strong>,
+    em: ({ children }) => <em>{children}</em>,
+    link: ({ children, value }) => {
+      const href: string = value?.href ?? "#";
+      const internal = href.startsWith("/") || href.includes("joystay.vn");
+      return internal
+        ? <Link href={href.replace(/^https?:\/\/(www\.)?joystay\.vn/, "") || "/"} className="text-joy-green-dark underline underline-offset-4">{children}</Link>
+        : <a href={href} target="_blank" rel="noopener noreferrer" className="text-joy-green-dark underline underline-offset-4">{children}</a>;
+    },
+  },
+  types: {
+    image: ({ value }) => {
+      if (!value?.url) return null;
+      const d = value.dims as { width?: number; height?: number } | undefined;
+      // Ảnh dọc/vuông: thu hẹp lại để không chiếm hết màn hình
+      const narrow = !!d?.width && !!d?.height && d.width / d.height < 1.15;
+      return (
+        <figure className={`my-8 ${narrow ? "max-w-md mx-auto" : ""}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={sizedImg(value.url, 1400)} alt={value.alt ?? ""} loading="lazy"
+               width={d?.width} height={d?.height}
+               className="w-full h-auto rounded-[1.5rem] bg-joy-warm" />
+          {value.caption && <figcaption className="mt-2 text-center text-sm text-joy-muted">{value.caption}</figcaption>}
+        </figure>
+      );
+    },
+  },
+};
+
+function BookCard({ lang }: { lang: "en" | "vi" }) {
+  return (
+    <div className="mt-12 rounded-[2rem] bg-joy-warm border border-joy-border p-7 sm:p-9">
+      <p className="font-serif text-2xl sm:text-3xl text-joy-ink leading-tight">
+        {lang === "en" ? "Stay at Joystay, District 3." : "Ở lại Joystay, Quận 3."}
+      </p>
+      <p className="mt-2 text-joy-muted text-base">
+        {lang === "en" ? "6 art rooms, self check-in 24/7. Book direct with no platform fees." : "6 phòng nghệ thuật, tự check-in 24/7. Đặt trực tiếp, không mất phí nền tảng."}
+      </p>
+      <Link href="/availability" className="btn-primary mt-5">{lang === "en" ? "Check availability" : "Xem lịch trống"}</Link>
+    </div>
+  );
+}
 
 export default function BlogPostContent({ post }: { post: BlogPost }) {
   const { lang } = useLang();
@@ -13,7 +80,10 @@ export default function BlogPostContent({ post }: { post: BlogPost }) {
   const excerpt = lang === "en" ? (post.excerptEn || post.excerpt) : post.excerpt;
   const category = lang === "en" ? (post.categoryEn || post.category) : post.category;
   const art = post.article;
-  const sized = (url: string, w: number) => (url.includes("cdn.sanity.io") ? `${url}?w=${w}&auto=format&q=75` : url);
+  const sized = sizedImg;
+  // Bài soạn trong Sanity: có bản English thì dùng khi xem tiếng Anh, không thì hiện bản tiếng Việt
+  const cmsBody = (lang === "en" && post.bodyEn?.length ? post.bodyEn : post.body) as Parameters<typeof PortableText>[0]["value"] | null | undefined;
+  const hasCmsBody = Array.isArray(cmsBody) && cmsBody.length > 0;
 
   return (
     <>
@@ -52,7 +122,7 @@ export default function BlogPostContent({ post }: { post: BlogPost }) {
         <div className="max-w-3xl mx-auto">
           {post.featuredImage && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={sized(post.featuredImage, 1400)} alt={title} className="w-full aspect-[16/9] object-cover rounded-[2rem] bg-joy-warm -mt-24 sm:-mt-28 relative shadow-xl mb-10" />
+            <img src={sized(post.featuredImage, 1400)} alt={post.imageAlt || title} className="w-full aspect-[16/9] object-cover rounded-[2rem] bg-joy-warm -mt-24 sm:-mt-28 relative shadow-xl mb-10" />
           )}
 
           {art ? (
@@ -89,15 +159,12 @@ export default function BlogPostContent({ post }: { post: BlogPost }) {
                 </div>
               )}
 
-              <div className="mt-12 rounded-[2rem] bg-joy-warm border border-joy-border p-7 sm:p-9">
-                <p className="font-serif text-2xl sm:text-3xl text-joy-ink leading-tight">
-                  {lang === "en" ? "Stay at Joystay, District 3." : "Ở lại Joystay, Quận 3."}
-                </p>
-                <p className="mt-2 text-joy-muted text-base">
-                  {lang === "en" ? "6 art rooms, self check-in 24/7. Book direct with no platform fees." : "6 phòng nghệ thuật, tự check-in 24/7. Đặt trực tiếp, không mất phí nền tảng."}
-                </p>
-                <Link href="/availability" className="btn-primary mt-5">{lang === "en" ? "Check availability" : "Xem lịch trống"}</Link>
-              </div>
+              <BookCard lang={lang} />
+            </article>
+          ) : hasCmsBody ? (
+            <article className="font-sans text-joy-ink text-[17px] leading-[1.75]">
+              <PortableText value={cmsBody!} components={ptComponents} />
+              <BookCard lang={lang} />
             </article>
           ) : (
             <p className="font-sans text-lg text-joy-ink/85 leading-relaxed">{excerpt}</p>

@@ -100,7 +100,7 @@ export const ALL_POSTS_QUERY = `
     publishedAt,
     isFeatured,
     gradient,
-    "featuredImage": featuredImage.asset->url
+    "featuredImage": coalesce(featuredImage.asset->url, body[_type == "image"][0].asset->url)
   }
 `;
 
@@ -116,12 +116,21 @@ export const POST_BY_SLUG_QUERY = `
     "category": categories[0]->title,
     "categoryEn": categories[0]->titleEn,
     "author": author->{ name, "image": image.asset->url },
-    body,
+    body[]{
+      ...,
+      _type == "image" => { ..., "url": asset->url, "dims": asset->metadata.dimensions },
+      markDefs[]{ ... }
+    },
+    "bodyEn": bodyEn[]{
+      ...,
+      _type == "image" => { ..., "url": asset->url, "dims": asset->metadata.dimensions },
+      markDefs[]{ ... }
+    },
     readTime,
     publishedAt,
     isFeatured,
     gradient,
-    "featuredImage": featuredImage.asset->url,
+    "featuredImage": coalesce(featuredImage.asset->url, body[_type == "image"][0].asset->url),
     imageAlt,
     seoTitle,
     seoDescription,
@@ -137,7 +146,7 @@ export const POST_BY_SLUG_QUERY = `
       readTime,
       publishedAt,
       gradient,
-      "featuredImage": featuredImage.asset->url
+      "featuredImage": coalesce(featuredImage.asset->url, body[_type == "image"][0].asset->url)
     }
   }
 `;

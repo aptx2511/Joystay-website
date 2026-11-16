@@ -28,7 +28,7 @@ export const post = defineType({
     // ── Nội dung ─────────────────────────────────────────────
     defineField({
       name: "body",
-      title: "Nội dung bài viết",
+      title: "Nội dung bài viết (Tiếng Việt)",
       type: "array",
       of: [
         {
@@ -54,7 +54,45 @@ export const post = defineType({
             ],
           },
         },
-        { type: "image", options: { hotspot: true } },
+        { type: "image", options: { hotspot: true }, fields: [
+          { name: "alt", type: "string", title: "Mô tả ảnh (alt)" },
+          { name: "caption", type: "string", title: "Chú thích dưới ảnh" },
+        ] },
+      ],
+    }),
+
+    defineField({
+      name: "bodyEn",
+      title: "Nội dung bài viết (English — để trống thì hiện bản tiếng Việt)",
+      type: "array",
+      of: [
+        {
+          type: "block",
+          styles: [
+            { title: "Normal", value: "normal" },
+            { title: "H2", value: "h2" },
+            { title: "H3", value: "h3" },
+            { title: "Quote", value: "blockquote" },
+          ],
+          marks: {
+            decorators: [
+              { title: "Bold", value: "strong" },
+              { title: "Italic", value: "em" },
+            ],
+            annotations: [
+              {
+                name: "link",
+                type: "object",
+                title: "URL",
+                fields: [{ name: "href", type: "url", title: "Link" }],
+              },
+            ],
+          },
+        },
+        { type: "image", options: { hotspot: true }, fields: [
+          { name: "alt", type: "string", title: "Mô tả ảnh (alt)" },
+          { name: "caption", type: "string", title: "Chú thích dưới ảnh" },
+        ] },
       ],
     }),
 
